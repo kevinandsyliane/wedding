@@ -562,5 +562,66 @@
     }
   }
 </script>
+  <!-- Musique de fond -->
+  <audio id="bg-music" loop>
+    <source src="musique.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Bouton musique -->
+  <button id="music-btn" onclick="toggleMusic()" style="
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    background: rgba(10,10,10,0.7);
+    border: 1px solid rgba(232,213,183,0.4);
+    color: var(--cream);
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+    transition: all .3s;
+  ">🎵</button>
+
+  <script>
+    const music = document.getElementById('bg-music');
+    music.volume = 0.15;
+    let playing = false;
+
+    // Démarrer au premier clic sur la page
+    document.addEventListener('click', function startOnce() {
+      if (!playing) {
+        music.play().then(() => {
+          playing = true;
+          document.getElementById('music-btn').textContent = '🎵';
+        }).catch(() => {});
+      }
+      document.removeEventListener('click', startOnce);
+    }, { once: false });
+
+    // Essai autoplay
+    window.addEventListener('load', () => {
+      music.play().then(() => {
+        playing = true;
+      }).catch(() => {});
+    });
+
+    function toggleMusic() {
+      if (playing) {
+        music.pause();
+        playing = false;
+        document.getElementById('music-btn').textContent = '🔇';
+      } else {
+        music.play();
+        playing = true;
+        document.getElementById('music-btn').textContent = '🎵';
+      }
+    }
+  </script>
 </body>
 </html>
