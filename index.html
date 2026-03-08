@@ -11,26 +11,42 @@
     html { scroll-behavior: smooth; }
     body { background: var(--black); color: var(--cream); font-family:'Cormorant Garamond',serif; font-weight:300; -webkit-font-smoothing:antialiased; }
 
+    /* SPLASH */
+    #splash { position:fixed; inset:0; z-index:99999; background:#0a0a0a; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity .9s ease; }
+    .splash-names { font-family:'Great Vibes',cursive; color:var(--cream-light); font-size:3.4rem; line-height:1.25; text-align:center; margin-bottom:.3rem; }
+    .splash-date  { font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.35em; color:rgba(232,213,183,0.4); text-transform:uppercase; margin-bottom:3rem; }
+    .enter-btn { font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.3em; text-transform:uppercase; background:var(--cream); color:var(--black); border:none; padding:.95rem 2.8rem; cursor:pointer; transition:background .3s; }
+    .enter-btn:hover { background:var(--cream-light); }
+
+    /* PAGES */
+    .page { display:none; min-height:100vh; flex-direction:column; align-items:center; }
+    .page.active { display:flex; }
+
     /* HERO */
     .hero { position:relative; width:100%; height:100svh; min-height:480px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
     .hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(10,10,10,0.1) 0%,rgba(10,10,10,0) 30%,rgba(10,10,10,0.65) 75%,rgba(10,10,10,1) 100%); }
+    .carrousel { position:absolute; inset:0; overflow:hidden; }
+    .carr-slide { position:absolute; inset:0; opacity:0; transition:opacity 1s ease; }
+    .carr-slide.carr-active { opacity:1; }
+    .carr-slide img { width:100%; height:100%; object-fit:cover; object-position:center top; filter:brightness(.58); }
+    .carr-btn { position:absolute; top:50%; transform:translateY(-50%); z-index:3; background:rgba(232,213,183,.15); border:1px solid rgba(232,213,183,.3); color:var(--cream); font-size:1.2rem; width:44px; height:44px; cursor:pointer; backdrop-filter:blur(4px); transition:background .3s; }
+    .carr-btn:hover { background:rgba(232,213,183,.3); }
+    .carr-prev { left:1rem; } .carr-next { right:1rem; }
+    .carr-dots { position:absolute; bottom:1.2rem; left:50%; transform:translateX(-50%); display:flex; gap:.6rem; z-index:3; }
+    .carr-dot { width:7px; height:7px; border-radius:50%; background:rgba(232,213,183,.35); cursor:pointer; transition:background .3s; }
+    .carr-dot.carr-dot-active { background:var(--cream); }
 
     /* CONTENT */
-    .content { background:var(--black); text-align:center; padding:0 1.5rem 5rem; }
-
-    /* Sections */
+    .content { background:var(--black); text-align:center; padding:0 1.5rem 5rem; width:100%; }
     .names-section { padding-top:4rem; opacity:0; animation:fadeUp 1s .2s forwards; }
     .date-section  { margin-top:3rem; opacity:0; animation:fadeUp 1s .5s forwards; }
-    .countdown     { display:flex; justify-content:center; gap:1.5rem; margin-top:1.2rem; font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.05em; color:var(--muted); opacity:0; animation:fadeUp 1s .7s forwards; }
-    .countdown b   { color:var(--cream); font-weight:400; }
-    .rsvp-section  { margin-top:2.5rem; opacity:0; animation:fadeUp 1s .85s forwards; }
+    .countdown { display:flex; justify-content:center; gap:1.5rem; margin-top:1.2rem; font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.05em; color:var(--muted); opacity:0; animation:fadeUp 1s .7s forwards; }
+    .countdown b { color:var(--cream); font-weight:400; }
+    .rsvp-section { margin-top:2.5rem; opacity:0; animation:fadeUp 1s .85s forwards; }
     .families-section { margin-top:4.5rem; padding-top:3rem; border-top:1px solid rgba(232,213,183,0.1); opacity:0; animation:fadeUp 1s 1s forwards; }
+    .nav-links-section { margin-top:4.5rem; padding-top:3rem; border-top:1px solid rgba(232,213,183,0.1); opacity:0; animation:fadeUp 1s 1.15s forwards; }
 
-    .histoire-section { margin-top:4.5rem; padding-top:3rem; border-top:1px solid rgba(232,213,183,0.1); opacity:0; animation:fadeUp 1s 1.15s forwards; }
-    .histoire-script { font-size:clamp(2rem,8vw,3.5rem); line-height:1.25; margin-bottom:1.6rem; }
-    .histoire-photo { width:min(280px,80vw); border-radius:4px; margin:0 auto 1.8rem; display:block; box-shadow:0 8px 32px rgba(0,0,0,.5); }
-    .histoire-body { font-size:.97rem; line-height:1.9; color:rgba(232,213,183,.78); max-width:340px; margin:0 auto; text-align:center; }
-    /* Typography */
+    /* TYPO */
     .script { font-family:'Great Vibes',cursive; color:var(--cream-light); display:block; }
     .name-script { font-size:clamp(3rem,12vw,5.5rem); line-height:1.1; }
     .and-text { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:.95rem; color:var(--muted); letter-spacing:.2em; display:block; margin:.7rem 0; }
@@ -40,251 +56,541 @@
     .verse { font-style:italic; font-size:.9rem; color:var(--muted); line-height:1.8; max-width:300px; margin:0 auto; }
     .verse cite { display:block; font-style:normal; font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; margin-top:.5rem; color:rgba(232,213,183,.35); }
 
-    /* RSVP btn */
-    .rsvp-btn { display:inline-block; width:min(280px,80%); padding:1rem 2rem; background:var(--cream); color:var(--black); font-family:'Cinzel',serif; font-size:.78rem; letter-spacing:.25em; text-transform:uppercase; border:none; cursor:pointer; transition:background .3s; }
+    /* BUTTONS */
+    .rsvp-btn { display:inline-block; width:min(280px,80%); padding:1rem 2rem; background:var(--cream); color:var(--black); font-family:'Cinzel',serif; font-size:.78rem; letter-spacing:.25em; text-transform:uppercase; border:none; cursor:pointer; transition:background .3s; text-decoration:none; }
     .rsvp-btn:hover { background:var(--cream-light); }
+    .rsvp-btn.ghost { background:transparent; border:1px solid rgba(232,213,183,0.4); color:var(--cream); }
+    .rsvp-btn.ghost:hover { background:rgba(232,213,183,.08); }
 
-    /* Flower SVG */
+    /* FLOWER */
     .flower { display:block; margin:0 auto; }
 
+    /* SUB-PAGES */
+    .sub-content { text-align:center; padding:3.5rem 1.5rem 5rem; max-width:520px; width:100%; }
+    .page-title { font-family:'Great Vibes',cursive; color:var(--cream-light); font-size:clamp(2.8rem,10vw,4.5rem); line-height:1.25; margin-bottom:3rem; opacity:0; animation:fadeUp 1s .3s forwards; }
+    .nav-back-link { font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.25em; text-transform:uppercase; color:var(--muted); background:none; border:none; border-bottom:1px solid rgba(232,213,183,0.2); padding-bottom:2px; cursor:pointer; transition:color .3s; }
+    .nav-back-link:hover { color:var(--cream); }
+    .sub-nav { width:100%; padding:1.8rem 2rem 0; text-align:center; opacity:0; animation:fadeUp .8s .1s forwards; }
+    .histoire-photo { width:min(300px,85vw); border-radius:4px; margin:0 auto 2rem; display:block; box-shadow:0 8px 32px rgba(0,0,0,.5); }
+    .histoire-body { font-size:1rem; line-height:2; color:rgba(232,213,183,.78); max-width:360px; margin:0 auto; text-align:center; }
+    .divider { width:1px; height:3rem; background:rgba(232,213,183,0.15); margin:2.5rem auto; }
+    .histoire-anim { opacity:0; animation:fadeUp 1s .3s forwards; }
+    .page-date { font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.25em; color:var(--muted); margin-bottom:3rem; opacity:0; animation:fadeUp 1s .45s forwards; }
+    .event { margin-bottom:3rem; opacity:0; animation:fadeUp 1s forwards; }
+    .event:nth-child(1){animation-delay:.5s} .event:nth-child(2){animation-delay:.7s}
+    .event-inner { background:rgba(232,213,183,0.04); border:1px solid rgba(232,213,183,0.1); border-radius:3px; padding:1.4rem 1.6rem 1.5rem; }
+    .event-time { font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.25em; color:var(--muted); margin-bottom:.5rem; }
+    .event-name { font-family:'Great Vibes',cursive; color:var(--cream-light); font-size:1.9rem; line-height:1.2; margin-bottom:.4rem; }
+    .event-place { font-size:.88rem; color:rgba(232,213,183,.6); margin-bottom:.3rem; }
+    .event-address { font-size:.78rem; color:rgba(232,213,183,.35); font-style:italic; margin-bottom:.8rem; line-height:1.5; }
+    .schedule { margin-top:.8rem; }
+    .schedule-item { display:flex; justify-content:space-between; gap:1rem; font-size:.82rem; color:rgba(232,213,183,.5); padding:.25rem 0; border-bottom:1px solid rgba(232,213,183,0.06); }
+    .schedule-item:last-child { border-bottom:none; }
+    .schedule-item span:first-child { color:rgba(232,213,183,.75); }
+    .map-btn { display:inline-block; margin-top:.9rem; font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:var(--black); background:var(--cream); padding:.55rem 1.4rem; text-decoration:none; cursor:pointer; border:none; transition:background .3s; }
+    .map-btn:hover { background:var(--cream-light); }
+    .card { background:rgba(232,213,183,0.04); border:1px solid rgba(232,213,183,0.1); border-radius:3px; padding:2rem 1.8rem 2.2rem; margin-bottom:1.6rem; opacity:0; animation:fadeUp 1s forwards; text-align:center; }
+    .card:nth-child(1){animation-delay:.5s} .card:nth-child(2){animation-delay:.7s} .card:nth-child(3){animation-delay:.9s}
+    .card-number { font-family:'Great Vibes',cursive; color:rgba(232,213,183,0.25); font-size:3.5rem; line-height:1; margin-bottom:.8rem; display:block; }
+    .card-title { font-family:'Cinzel',serif; font-size:.75rem; letter-spacing:.25em; text-transform:uppercase; color:var(--cream); margin-bottom:1rem; display:block; }
+    .card-divider { width:30px; height:1px; background:rgba(232,213,183,0.2); margin:0 auto 1rem; }
+    .card-body { font-size:.97rem; line-height:1.9; color:rgba(232,213,183,.72); }
+    .faq-list { text-align:left; width:100%; }
+    .faq-item { border-bottom:1px solid rgba(232,213,183,0.1); overflow:hidden; opacity:0; animation:fadeUp 1s forwards; }
+    .faq-item:first-child { border-top:1px solid rgba(232,213,183,0.1); }
+    .faq-item:nth-child(1){animation-delay:.5s} .faq-item:nth-child(2){animation-delay:.65s} .faq-item:nth-child(3){animation-delay:.8s} .faq-item:nth-child(4){animation-delay:.95s}
+    .faq-question { width:100%; background:none; border:none; color:var(--cream); cursor:pointer; padding:1.6rem 0; display:flex; justify-content:space-between; align-items:center; gap:1rem; text-align:left; }
+    .faq-q-text { font-family:'Great Vibes',cursive; font-size:1.55rem; color:var(--cream-light); line-height:1.3; }
+    .faq-icon { font-family:'Cinzel',serif; font-size:.9rem; color:var(--muted); flex-shrink:0; transition:transform .35s; }
+    .faq-item.open .faq-icon { transform:rotate(45deg); }
+    .faq-answer { max-height:0; overflow:hidden; transition:max-height .4s ease; }
+    .faq-item.open .faq-answer { max-height:300px; }
+    .faq-answer-inner { padding-bottom:1.6rem; font-size:.97rem; line-height:1.9; color:rgba(232,213,183,.72); }
+
+    /* BOTTOM NAV */
+    .bottom-nav { width:100%; padding:2rem 1.5rem 3rem; text-align:center; border-top:1px solid rgba(232,213,183,0.1); margin-top:2rem; }
+    .bottom-nav div { display:flex; flex-wrap:wrap; justify-content:center; gap:.8rem 1.5rem; }
+    .bottom-nav button { font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45); background:none; border:none; cursor:pointer; transition:color .3s; padding:0; }
+    .bottom-nav button:hover { color:var(--cream); }
+
     /* MODAL */
-    .modal-overlay { position:fixed; inset:0; background:rgba(5,5,5,.93); backdrop-filter:blur(6px); z-index:100; display:flex; align-items:center; justify-content:center; padding:1rem; opacity:0; pointer-events:none; transition:opacity .4s; }
+    .modal-overlay { position:fixed; inset:0; background:rgba(5,5,5,.93); backdrop-filter:blur(6px); z-index:200; display:flex; align-items:center; justify-content:center; padding:1rem; opacity:0; pointer-events:none; transition:opacity .4s; }
     .modal-overlay.open { opacity:1; pointer-events:all; }
     .modal { background:#0e0e0e; border:1px solid rgba(232,213,183,.18); padding:2.2rem 1.5rem; max-width:420px; width:100%; text-align:center; position:relative; transform:translateY(20px); transition:transform .4s; max-height:90svh; overflow-y:auto; border-radius:2px; }
     .modal-overlay.open .modal { transform:translateY(0); }
     .modal-close { position:absolute; top:1rem; right:1.2rem; background:none; border:none; color:var(--muted); font-size:1.4rem; cursor:pointer; min-width:44px; min-height:44px; display:flex; align-items:center; justify-content:center; }
     .modal-title { font-family:'Great Vibes',cursive; font-size:2.4rem; color:var(--cream-light); margin-bottom:.4rem; }
     .modal-sub { font-size:.78rem; font-style:italic; color:var(--muted); margin-bottom:1.6rem; letter-spacing:.05em; }
-    .modal input,.modal select { width:100%; background:rgba(232,213,183,.04); border:none; border-bottom:1px solid rgba(232,213,183,.28); padding:.9rem .2rem; color:var(--cream); font-family:'Cormorant Garamond',serif; font-size:1rem; font-style:italic; outline:none; margin-bottom:1.2rem; transition:border-color .3s; -webkit-appearance:none; }
-    .modal input:focus,.modal select:focus { border-color:var(--cream); }
+    .modal input { width:100%; background:rgba(232,213,183,.04); border:none; border-bottom:1px solid rgba(232,213,183,.28); padding:.9rem .2rem; color:var(--cream); font-family:'Cormorant Garamond',serif; font-size:1rem; font-style:italic; outline:none; margin-bottom:1.2rem; transition:border-color .3s; -webkit-appearance:none; }
+    .modal input:focus { border-color:var(--cream); }
     .modal input::placeholder { color:rgba(232,213,183,.32); }
-    .modal select option { background:#111; }
     .modal-btns { display:flex; gap:.75rem; margin-top:.3rem; }
     .mbtn { flex:1; padding:.9rem; font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.25em; text-transform:uppercase; cursor:pointer; border:1px solid var(--cream); transition:all .3s; min-height:44px; }
     .mbtn-yes { background:var(--cream); color:var(--black); }
     .mbtn-yes:hover { background:var(--cream-light); }
     .mbtn-no { background:transparent; color:var(--cream); }
     .mbtn-no:hover { background:rgba(232,213,183,.08); }
-    .thankyou { display:none; }
-    .thankyou.show { display:block; }
-    .form-wrap.hide { display:none; }
+    .ty-script { font-family:'Great Vibes',cursive; font-size:3rem; color:var(--cream-light); display:block; margin-bottom:1rem; }
+    .ty-body { font-size:1rem; font-style:italic; color:rgba(232,213,183,.75); line-height:1.8; }
+    .membre-row { display:flex; align-items:center; justify-content:space-between; padding:.6rem .2rem; border-bottom:1px solid rgba(232,213,183,.12); }
+    .membre-nom { font-family:'Cormorant Garamond',serif; font-size:1rem; font-style:italic; color:var(--cream); text-align:left; }
+    .membre-toggle { display:flex; gap:.4rem; }
+    .tog { padding:.35rem .7rem; font-family:'Cinzel',serif; font-size:.55rem; letter-spacing:.15em; border:1px solid rgba(232,213,183,.35); background:transparent; color:var(--muted); cursor:pointer; transition:all .25s; }
+    .tog.oui.actif { background:var(--cream); color:var(--black); border-color:var(--cream); }
+    .tog.non.actif { background:rgba(220,100,100,.25); color:rgba(255,180,180,.9); border-color:rgba(220,100,100,.5); }
 
-    /* MOBILE */
+    /* MUSIC */
+    #music-btn { position:fixed; bottom:1.5rem; right:1.5rem; width:2.8rem; height:2.8rem; border-radius:50%; background:rgba(10,10,10,0.7); border:1px solid rgba(232,213,183,0.4); color:var(--cream); font-size:1.2rem; cursor:pointer; z-index:9999; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(6px); transition:all .3s; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
     @media (max-width:480px) {
       .content { padding:0 1.2rem 4rem; }
+      .sub-content { padding:2.5rem 1.2rem 4rem; }
       .countdown { gap:.9rem; }
       .modal { padding:2rem 1.2rem; }
       .modal-btns { flex-direction:column; }
+      .event-inner { padding:1.2rem 1.1rem; }
     }
-    .ty-script { font-family:'Great Vibes',cursive; font-size:3rem; color:var(--cream-light); display:block; margin-bottom:1rem; }
-    .ty-body { font-size:1rem; font-style:italic; color:rgba(232,213,183,.75); line-height:1.8; }
-
-    /* Footer supprimé */
-
-
-    /* CARROUSEL */
-    .carrousel { position:absolute; inset:0; overflow:hidden; }
-    .carr-slide { position:absolute; inset:0; opacity:0; transition:opacity 1s ease; }
-    .carr-slide.carr-active { opacity:1; }
-    .carr-slide img { width:100%; height:100%; object-fit:cover; object-position:center top; filter:brightness(.58); }
-    .carr-btn { position:absolute; top:50%; transform:translateY(-50%); z-index:3; background:rgba(232,213,183,.15); border:1px solid rgba(232,213,183,.3); color:var(--cream); font-size:1.2rem; width:44px; height:44px; cursor:pointer; backdrop-filter:blur(4px); transition:background .3s; }
-    .carr-btn:hover { background:rgba(232,213,183,.3); }
-    .carr-prev { left:1rem; }
-    .carr-next { right:1rem; }
-    .carr-dots { position:absolute; bottom:1.2rem; left:50%; transform:translateX(-50%); display:flex; gap:.6rem; z-index:3; }
-    .carr-dot { width:7px; height:7px; border-radius:50%; background:rgba(232,213,183,.35); cursor:pointer; transition:background .3s; }
-    .carr-dot.carr-dot-active { background:var(--cream); }
-
-    @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
-    nav a { color:rgba(232,213,183,0.45) !important; text-decoration:none !important; }
-  nav a:visited { color:rgba(232,213,183,0.45) !important; }
-  nav a:hover { color:var(--cream) !important; }
-  a.rsvp-btn, a.rsvp-btn:visited { color:var(--black) !important; text-decoration:none !important; }
-  a.rsvp-btn[style*="color:var(--cream)"], a.rsvp-btn[style*="color:var(--cream)"]:visited { color:var(--cream) !important; }
-  a.rsvp-btn[style*="color:rgba(232"], a.rsvp-btn[style*="color:rgba(232"]:visited { color:rgba(232,213,183,0.5) !important; }
   </style>
 </head>
 <body>
 
-<!-- SPLASH SCREEN -->
-<div id="splash" style="
-  position:fixed; inset:0; z-index:99999;
-  background:#0a0a0a;
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  transition:opacity .8s ease;
-">
-  <svg width="64" height="64" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:.6; margin-bottom:2rem;">
-    <g stroke="#e8d5b7" stroke-width="0.75">
-      <ellipse cx="40" cy="24" rx="5" ry="14"/><ellipse cx="40" cy="56" rx="5" ry="14"/>
-      <ellipse cx="24" cy="40" rx="14" ry="5"/><ellipse cx="56" cy="40" rx="14" ry="5"/>
-      <ellipse cx="27.5" cy="27.5" rx="5" ry="14" transform="rotate(-45 27.5 27.5)"/>
-      <ellipse cx="52.5" cy="52.5" rx="5" ry="14" transform="rotate(-45 52.5 52.5)"/>
-      <ellipse cx="52.5" cy="27.5" rx="5" ry="14" transform="rotate(45 52.5 27.5)"/>
-      <ellipse cx="27.5" cy="52.5" rx="5" ry="14" transform="rotate(45 27.5 52.5)"/>
-      <circle cx="40" cy="40" r="7"/><circle cx="40" cy="40" r="2.5" fill="#e8d5b7" stroke="none" opacity=".6"/>
+<!-- SPLASH -->
+<div id="splash">
+  <!-- Rose splash -->
+  <svg width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:.55; margin-bottom:2rem;">
+    <g stroke="#e8d5b7" stroke-width="0.7" fill="none">
+      <path d="M50,50 C47,39 44,28 50,17 C56,28 53,39 50,50Z"/>
+      <path d="M50,50 C61,47 72,44 83,50 C72,56 61,53 50,50Z"/>
+      <path d="M50,50 C53,61 56,72 50,83 C44,72 47,61 50,50Z"/>
+      <path d="M50,50 C39,53 28,56 17,50 C28,44 39,47 50,50Z"/>
+      <path d="M50,50 C55,38 63,31 74,28 C71,39 63,47 50,50Z"/>
+      <path d="M50,50 C62,55 69,63 72,74 C61,71 53,63 50,50Z"/>
+      <path d="M50,50 C45,62 37,69 26,72 C29,61 37,53 50,50Z"/>
+      <path d="M50,50 C38,45 31,37 28,26 C39,29 47,37 50,50Z"/>
+      <path d="M50,50 C48,42 46,35 50,27 C54,35 52,42 50,50Z" stroke-opacity=".4"/>
+      <path d="M50,50 C58,48 65,46 73,50 C65,54 58,52 50,50Z" stroke-opacity=".4"/>
+      <path d="M50,50 C52,58 54,65 50,73 C46,65 48,58 50,50Z" stroke-opacity=".4"/>
+      <path d="M50,50 C42,52 35,54 27,50 C35,46 42,48 50,50Z" stroke-opacity=".4"/>
+      <circle cx="50" cy="50" r="9" stroke-opacity=".45"/>
+      <circle cx="50" cy="50" r="5" stroke-opacity=".3"/>
+      <circle cx="50" cy="50" r="2.2" fill="#e8d5b7" stroke="none" opacity=".7"/>
+      <circle cx="50" cy="41" r="1" fill="#e8d5b7" stroke="none" opacity=".3"/>
+      <circle cx="59" cy="50" r="1" fill="#e8d5b7" stroke="none" opacity=".3"/>
+      <circle cx="50" cy="59" r="1" fill="#e8d5b7" stroke="none" opacity=".3"/>
+      <circle cx="41" cy="50" r="1" fill="#e8d5b7" stroke="none" opacity=".3"/>
     </g>
   </svg>
-  <span style="font-family:'Great Vibes',cursive; color:#f0e4cc; font-size:3.2rem; line-height:1.2; display:block; margin-bottom:.4rem;">Syliane</span>
-  <span style="font-family:'Great Vibes',cursive; color:#f0e4cc; font-size:3.2rem; line-height:1.2; display:block; margin-bottom:.3rem;">&amp; Kevin</span>
-  <span style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.3em; color:rgba(232,213,183,0.4); text-transform:uppercase; margin-bottom:3rem;">27 Juin 2026</span>
-  <button onclick="enterSite()" style="
-    font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.3em; text-transform:uppercase;
-    background:#e8d5b7; color:#0a0a0a; border:none; padding:.9rem 2.5rem;
-    cursor:pointer; transition:background .3s;
-  ">Entrer</button>
+  <div class="splash-names">Syliane<br>&amp; Kevin</div>
+  <div class="splash-date">27 Juin 2026</div>
+  <button class="enter-btn" onclick="enterSite()">Entrer</button>
 </div>
 
+<!-- AUDIO + BOUTON MUSIQUE -->
+<audio id="bg-music" loop><source src="musique.mp3" type="audio/mpeg"></audio>
+<button id="music-btn" onclick="toggleMusic()">🎵</button>
 
-<!-- HERO CARROUSEL -->
-<section class="hero">
-  <div class="carrousel" id="carrousel">
-    <div class="carr-slide carr-active"><img src="photo1.jpg" alt="Syliane & Kevin"></div>
-    <div class="carr-slide"><img src="photo2.jpg" alt="Syliane & Kevin"></div>
-    <div class="carr-slide"><img src="photo3.jpg" alt="Syliane & Kevin"></div>
-  </div>
-  <div class="hero-overlay"></div>
-  <!-- Flèches -->
-  <button class="carr-btn carr-prev" onclick="carrMove(-1)">&#8592;</button>
-  <button class="carr-btn carr-next" onclick="carrMove(1)">&#8594;</button>
-  <!-- Points -->
-  <div class="carr-dots">
-    <span class="carr-dot carr-dot-active" onclick="carrGo(0)"></span>
-    <span class="carr-dot" onclick="carrGo(1)"></span>
-    <span class="carr-dot" onclick="carrGo(2)"></span>
-  </div>
-</section>
+<!-- ════════════════════════════════
+     PAGE ACCUEIL
+════════════════════════════════ -->
+<div id="page-accueil" class="page active">
+  <section class="hero" style="width:100%">
+    <div class="carrousel" id="carrousel">
+      <div class="carr-slide carr-active"><img src="photo1.jpg" alt="Syliane & Kevin"></div>
+      <div class="carr-slide"><img src="photo2.jpg" alt="Syliane & Kevin"></div>
+      <div class="carr-slide"><img src="photo3.jpg" alt="Syliane & Kevin"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <button class="carr-btn carr-prev" onclick="carrMove(-1)">&#8592;</button>
+    <button class="carr-btn carr-next" onclick="carrMove(1)">&#8594;</button>
+    <div class="carr-dots">
+      <span class="carr-dot carr-dot-active" onclick="carrGo(0)"></span>
+      <span class="carr-dot" onclick="carrGo(1)"></span>
+      <span class="carr-dot" onclick="carrGo(2)"></span>
+    </div>
+  </section>
 
-<!-- CONTENT -->
-<main class="content">
-
-  <div class="names-section">
-    <span class="script name-script">Syliane</span>
-    <span class="script name-script">Bicko</span>
-    <span class="and-text">et</span>
-    <span class="script name-script">Kevin</span>
-    <span class="script name-script">Carpaye</span>
-  </div>
-
-  <div class="date-section">
-    <span class="script date-script">27 Juin,</span>
-    <span class="script date-script">2026</span>
-  </div>
-
-  <div class="countdown">
-    <span><b id="cd-d">--</b> j</span>
-    <span><b id="cd-h">--</b> h</span>
-    <span><b id="cd-m">--</b> min</span>
-    <span><b id="cd-s">--</b> s</span>
-  </div>
-
-  <div class="rsvp-section">
-    <button class="rsvp-btn" onclick="openModal()">RSVP</button>
-  </div>
-
-  <div style="margin-top:1rem; opacity:0; animation:fadeUp 1s 1s forwards;">
-    <div id="cal-menu" style="position:relative; display:inline-block;">
-      <button class="rsvp-btn" onclick="toggleCalMenu()" style="background:transparent; border:1px solid rgba(232,213,183,0.35); color:var(--cream); width:min(280px,80%);">
-        🗓 Ajouter au calendrier
-      </button>
-      <div id="cal-dropdown" style="display:none; position:absolute; left:50%; transform:translateX(-50%); top:calc(100% + .5rem); background:#1a1a1a; border:1px solid rgba(232,213,183,0.15); border-radius:3px; min-width:220px; z-index:100; overflow:hidden;">
-        <a onclick="addToCalendar('google')" style="display:block; padding:.85rem 1.2rem; font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.15em; color:var(--cream); text-decoration:none; cursor:pointer; border-bottom:1px solid rgba(232,213,183,0.08); transition:background .2s;" onmouseover="this.style.background='rgba(232,213,183,0.07)'" onmouseout="this.style.background='transparent'">Google Calendar</a>
-        <a onclick="addToCalendar('apple')" style="display:block; padding:.85rem 1.2rem; font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.15em; color:var(--cream); text-decoration:none; cursor:pointer; border-bottom:1px solid rgba(232,213,183,0.08); transition:background .2s;" onmouseover="this.style.background='rgba(232,213,183,0.07)'" onmouseout="this.style.background='transparent'">Apple Calendar / iCal</a>
-        <a onclick="addToCalendar('outlook')" style="display:block; padding:.85rem 1.2rem; font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.15em; color:var(--cream); text-decoration:none; cursor:pointer; transition:background .2s;" onmouseover="this.style.background='rgba(232,213,183,0.07)'" onmouseout="this.style.background='transparent'">Outlook</a>
+  <main class="content">
+    <div class="names-section">
+      <span class="script name-script">Syliane</span>
+      <span class="script name-script">Bicko</span>
+      <span class="and-text">et</span>
+      <span class="script name-script">Kevin</span>
+      <span class="script name-script">Carpaye</span>
+    </div>
+    <div class="date-section">
+      <span class="script date-script">27 Juin,</span>
+      <span class="script date-script">2026</span>
+    </div>
+    <div class="countdown">
+      <span><b id="cd-d">--</b> j</span>
+      <span><b id="cd-h">--</b> h</span>
+      <span><b id="cd-m">--</b> min</span>
+      <span><b id="cd-s">--</b> s</span>
+    </div>
+    <div class="rsvp-section">
+      <button class="rsvp-btn" onclick="openModal()">RSVP</button>
+    </div>
+    <div style="margin-top:1rem; opacity:0; animation:fadeUp 1s 1s forwards;">
+      <div id="cal-menu" style="position:relative; display:inline-block;">
+        <button class="rsvp-btn ghost" onclick="toggleCalMenu()">🗓 Ajouter au calendrier</button>
+        <div id="cal-dropdown" style="display:none; position:absolute; left:50%; transform:translateX(-50%); top:calc(100% + .5rem); background:#1a1a1a; border:1px solid rgba(232,213,183,0.15); border-radius:3px; min-width:220px; z-index:100; overflow:hidden;">
+          <a onclick="addToCalendar('google')" style="display:block;padding:.85rem 1.2rem;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--cream);text-decoration:none;cursor:pointer;border-bottom:1px solid rgba(232,213,183,0.08);" onmouseover="this.style.background='rgba(232,213,183,0.07)'" onmouseout="this.style.background='transparent'">Google Calendar</a>
+          <a onclick="addToCalendar('apple')" style="display:block;padding:.85rem 1.2rem;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--cream);text-decoration:none;cursor:pointer;border-bottom:1px solid rgba(232,213,183,0.08);" onmouseover="this.style.background='rgba(232,213,183,0.07)'" onmouseout="this.style.background='transparent'">Apple Calendar / iCal</a>
+          <a onclick="addToCalendar('outlook')" style="display:block;padding:.85rem 1.2rem;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.15em;color:var(--cream);text-decoration:none;cursor:pointer;" onmouseover="this.style.background='rgba(232,213,183,0.07)'" onmouseout="this.style.background='transparent'">Outlook</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="families-section">
-    <!-- Flower 1 -->
-    <img class="flower" src="logo.jpeg" style="width:90px; height:90px; object-fit:contain; border-radius:50%; margin-bottom:1.2rem; opacity:.7" alt="S&K">
-
-    <span class="script families-script">Les familles Bicko<br>et Carpaye</span>
-    <p class="families-body">Ont le plaisir de vous faire part et<br>de vous convier au mariage de leurs<br>enfants</p>
-    <p class="verse">Ce que dieu a uni, que l'homme ne<br>le sépare pas<cite>Marc 10:09</cite></p>
-
-    <!-- Flower 2 -->
-    <img class="flower" src="logo.jpeg" style="width:90px; height:90px; object-fit:contain; border-radius:50%; margin-top:2.8rem; opacity:.45" alt="S&K">
-  </div>
-
-  <div class="histoire-section" style="display:flex; flex-direction:column; gap:1rem; align-items:center;">
-    <a href="histoire.html" class="rsvp-btn" style="text-decoration:none; display:inline-block;">Notre Histoire</a>
-    <a href="programme.html" class="rsvp-btn" style="text-decoration:none; display:inline-block; background:transparent; border:1px solid rgba(232,213,183,0.4); color:var(--cream);">Programme</a>
-    <a href="important.html" class="rsvp-btn" style="text-decoration:none; display:inline-block; background:transparent; border:1px solid rgba(232,213,183,0.4); color:var(--cream);">Informations importantes</a>
-    <a href="faq.html" class="rsvp-btn" style="text-decoration:none; display:inline-block; background:transparent; border:1px solid rgba(232,213,183,0.4); color:var(--cream);">FAQ</a>
-  </div>
-
-
-</main>
-
-  <!-- NAV BAS -->
-  <nav style="width:100%; padding:2rem 1.5rem 3rem; text-align:center; border-top:1px solid rgba(232,213,183,0.1); margin-top:2rem;">
-    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:.8rem 1.5rem;">
-      <a href="histoire.html" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">Notre Histoire</a>
-      <a href="programme.html" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">Programme</a>
-      <a href="important.html" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">Infos importantes</a>
-      <a href="faq.html" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">FAQ</a>
+    <div class="families-section">
+      <svg class="flower" width="82" height="82" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:1.8rem; opacity:.62">
+        <g stroke="#e8d5b7" stroke-width="0.65" fill="none">
+          <path d="M50,50 C47,39 44,28 50,17 C56,28 53,39 50,50Z"/>
+          <path d="M50,50 C61,47 72,44 83,50 C72,56 61,53 50,50Z"/>
+          <path d="M50,50 C53,61 56,72 50,83 C44,72 47,61 50,50Z"/>
+          <path d="M50,50 C39,53 28,56 17,50 C28,44 39,47 50,50Z"/>
+          <path d="M50,50 C55,38 63,31 74,28 C71,39 63,47 50,50Z"/>
+          <path d="M50,50 C62,55 69,63 72,74 C61,71 53,63 50,50Z"/>
+          <path d="M50,50 C45,62 37,69 26,72 C29,61 37,53 50,50Z"/>
+          <path d="M50,50 C38,45 31,37 28,26 C39,29 47,37 50,50Z"/>
+          <path d="M50,50 C48,42 46,35 50,27 C54,35 52,42 50,50Z" stroke-opacity=".4"/>
+          <path d="M50,50 C58,48 65,46 73,50 C65,54 58,52 50,50Z" stroke-opacity=".4"/>
+          <path d="M50,50 C52,58 54,65 50,73 C46,65 48,58 50,50Z" stroke-opacity=".4"/>
+          <path d="M50,50 C42,52 35,54 27,50 C35,46 42,48 50,50Z" stroke-opacity=".4"/>
+          <circle cx="50" cy="50" r="9" stroke-opacity=".45"/>
+          <circle cx="50" cy="50" r="5" stroke-opacity=".3"/>
+          <circle cx="50" cy="50" r="2.2" fill="#e8d5b7" stroke="none" opacity=".65"/>
+          <circle cx="50" cy="41" r="1" fill="#e8d5b7" stroke="none" opacity=".3"/>
+          <circle cx="59" cy="50" r="1" fill="#e8d5b7" stroke="none" opacity=".3"/>
+          <circle cx="50" cy="59" r="1" fill="#e8d5b7" stroke="none" opacity=".3"/>
+          <circle cx="41" cy="50" r="1" fill="#e8d5b7" stroke="none" opacity=".3"/>
+        </g>
+      </svg>
+      <span class="script families-script">Les familles Bicko<br>et Carpaye</span>
+      <p class="families-body">Ont le plaisir de vous faire part et<br>de vous convier au mariage de leurs<br>enfants</p>
+      <p class="verse">Ce que dieu a uni, que l'homme ne<br>le sépare pas<cite>Marc 10:09</cite></p>
+      <svg class="flower" width="82" height="82" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-top:2.8rem; opacity:.32">
+        <g stroke="#e8d5b7" stroke-width="0.65" fill="none">
+          <path d="M50,50 C47,39 44,28 50,17 C56,28 53,39 50,50Z"/>
+          <path d="M50,50 C61,47 72,44 83,50 C72,56 61,53 50,50Z"/>
+          <path d="M50,50 C53,61 56,72 50,83 C44,72 47,61 50,50Z"/>
+          <path d="M50,50 C39,53 28,56 17,50 C28,44 39,47 50,50Z"/>
+          <path d="M50,50 C55,38 63,31 74,28 C71,39 63,47 50,50Z"/>
+          <path d="M50,50 C62,55 69,63 72,74 C61,71 53,63 50,50Z"/>
+          <path d="M50,50 C45,62 37,69 26,72 C29,61 37,53 50,50Z"/>
+          <path d="M50,50 C38,45 31,37 28,26 C39,29 47,37 50,50Z"/>
+          <circle cx="50" cy="50" r="9" stroke-opacity=".4"/>
+          <circle cx="50" cy="50" r="2.2" fill="#e8d5b7" stroke="none" opacity=".45"/>
+        </g>
+      </svg>
     </div>
-  </nav>
 
-<!-- MODAL RSVP -->
+    <div class="nav-links-section" style="display:flex;flex-direction:column;gap:1rem;align-items:center;">
+      <button class="rsvp-btn" onclick="showPage('histoire')">Notre Histoire</button>
+      <button class="rsvp-btn ghost" onclick="showPage('programme')">Programme</button>
+      <button class="rsvp-btn ghost" onclick="showPage('important')">Informations importantes</button>
+      <button class="rsvp-btn ghost" onclick="showPage('faq')">FAQ</button>
+    </div>
+  </main>
+
+  <nav class="bottom-nav"><div>
+    <button onclick="showPage('histoire')">Notre Histoire</button>
+    <button onclick="showPage('programme')">Programme</button>
+    <button onclick="showPage('important')">Infos importantes</button>
+    <button onclick="showPage('faq')">FAQ</button>
+  </div></nav>
+</div>
+
+<!-- ════════════════════════════════
+     PAGE NOTRE HISTOIRE
+════════════════════════════════ -->
+<div id="page-histoire" class="page">
+  <nav class="sub-nav"><button class="nav-back-link" onclick="showPage('accueil')">← Retour à l'invitation</button></nav>
+  <main class="sub-content" style="max-width:480px;">
+    <div class="histoire-anim">
+      <svg class="flower" width="82" height="82" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:1.8rem;opacity:.62">
+        <g stroke="#e8d5b7" stroke-width="0.65" fill="none">
+          <path d="M50,50 C47,39 44,28 50,17 C56,28 53,39 50,50Z"/><path d="M50,50 C61,47 72,44 83,50 C72,56 61,53 50,50Z"/><path d="M50,50 C53,61 56,72 50,83 C44,72 47,61 50,50Z"/><path d="M50,50 C39,53 28,56 17,50 C28,44 39,47 50,50Z"/>
+          <path d="M50,50 C55,38 63,31 74,28 C71,39 63,47 50,50Z"/><path d="M50,50 C62,55 69,63 72,74 C61,71 53,63 50,50Z"/><path d="M50,50 C45,62 37,69 26,72 C29,61 37,53 50,50Z"/><path d="M50,50 C38,45 31,37 28,26 C39,29 47,37 50,50Z"/>
+          <path d="M50,50 C48,42 46,35 50,27 C54,35 52,42 50,50Z" stroke-opacity=".4"/><path d="M50,50 C58,48 65,46 73,50 C65,54 58,52 50,50Z" stroke-opacity=".4"/><path d="M50,50 C52,58 54,65 50,73 C46,65 48,58 50,50Z" stroke-opacity=".4"/><path d="M50,50 C42,52 35,54 27,50 C35,46 42,48 50,50Z" stroke-opacity=".4"/>
+          <circle cx="50" cy="50" r="9" stroke-opacity=".45"/><circle cx="50" cy="50" r="5" stroke-opacity=".3"/><circle cx="50" cy="50" r="2.2" fill="#e8d5b7" stroke="none" opacity=".65"/>
+          <circle cx="50" cy="41" r="1" fill="#e8d5b7" stroke="none" opacity=".3"/><circle cx="59" cy="50" r="1" fill="#e8d5b7" stroke="none" opacity=".3"/><circle cx="50" cy="59" r="1" fill="#e8d5b7" stroke="none" opacity=".3"/><circle cx="41" cy="50" r="1" fill="#e8d5b7" stroke="none" opacity=".3"/>
+        </g>
+      </svg>
+      <span style="font-family:'Great Vibes',cursive;color:var(--cream-light);display:block;font-size:clamp(2.8rem,10vw,4.5rem);line-height:1.25;margin-bottom:1.8rem;">Notre Histoire</span>
+      <img class="histoire-photo" src="histoire.png" alt="Syliane & Kevin"/>
+      <p class="histoire-body">
+        Après dix ans de vie commune, faits de complicité, de rires, et de petits défis du quotidien, c'est sur l'île de la Réunion que nous nous sommes dit "oui", au cœur de paysages magnifiques et d'une atmosphère unique, gravée à jamais dans nos cœurs.<br><br>
+        Notre bonheur s'est agrandi avec l'arrivée de nos deux enfants, Jailyss et Owenn qui illuminent notre quotidien et nous rappellent chaque jour la beauté de la vie de famille.<br><br>
+        Aujourd'hui, entourés de nos proches nous avons hâte de célébrer notre amour et de partager cette nouvelle étape de notre vie avec ceux qui comptent le plus pour nous.
+      </p>
+      <div class="divider"></div>
+      <svg class="flower" width="82" height="82" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:.32">
+        <g stroke="#e8d5b7" stroke-width="0.65" fill="none">
+          <path d="M50,50 C47,39 44,28 50,17 C56,28 53,39 50,50Z"/><path d="M50,50 C61,47 72,44 83,50 C72,56 61,53 50,50Z"/><path d="M50,50 C53,61 56,72 50,83 C44,72 47,61 50,50Z"/><path d="M50,50 C39,53 28,56 17,50 C28,44 39,47 50,50Z"/>
+          <path d="M50,50 C55,38 63,31 74,28 C71,39 63,47 50,50Z"/><path d="M50,50 C62,55 69,63 72,74 C61,71 53,63 50,50Z"/><path d="M50,50 C45,62 37,69 26,72 C29,61 37,53 50,50Z"/><path d="M50,50 C38,45 31,37 28,26 C39,29 47,37 50,50Z"/>
+          <circle cx="50" cy="50" r="9" stroke-opacity=".4"/><circle cx="50" cy="50" r="2.2" fill="#e8d5b7" stroke="none" opacity=".45"/>
+        </g>
+      </svg>
+      <button class="nav-back-link" style="margin-top:3rem;display:inline-block;" onclick="showPage('programme')">Programme →</button>
+    </div>
+  </main>
+  <nav class="bottom-nav"><div>
+    <button onclick="showPage('accueil')">Accueil</button><button onclick="showPage('histoire')">Notre Histoire</button>
+    <button onclick="showPage('programme')">Programme</button><button onclick="showPage('important')">Infos importantes</button><button onclick="showPage('faq')">FAQ</button>
+  </div></nav>
+</div>
+
+<!-- ════════════════════════════════
+     PAGE PROGRAMME
+════════════════════════════════ -->
+<div id="page-programme" class="page">
+  <nav class="sub-nav"><button class="nav-back-link" onclick="showPage('accueil')">← Retour à l'invitation</button></nav>
+  <main class="sub-content" style="max-width:480px;">
+    <p class="page-title">Programme</p>
+    <p class="page-date">Samedi 27 Juin 2026</p>
+    <svg class="flower" width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:2.5rem;opacity:.52">
+      <g stroke="#e8d5b7" stroke-width="0.65" fill="none">
+        <path d="M50,50 C47,39 44,28 50,17 C56,28 53,39 50,50Z"/><path d="M50,50 C61,47 72,44 83,50 C72,56 61,53 50,50Z"/><path d="M50,50 C53,61 56,72 50,83 C44,72 47,61 50,50Z"/><path d="M50,50 C39,53 28,56 17,50 C28,44 39,47 50,50Z"/>
+        <path d="M50,50 C55,38 63,31 74,28 C71,39 63,47 50,50Z"/><path d="M50,50 C62,55 69,63 72,74 C61,71 53,63 50,50Z"/><path d="M50,50 C45,62 37,69 26,72 C29,61 37,53 50,50Z"/><path d="M50,50 C38,45 31,37 28,26 C39,29 47,37 50,50Z"/>
+        <circle cx="50" cy="50" r="9" stroke-opacity=".45"/><circle cx="50" cy="50" r="2.2" fill="#e8d5b7" stroke="none" opacity=".6"/>
+      </g>
+    </svg>
+    <div style="max-width:360px;margin:0 auto;">
+      <div class="event"><div class="event-inner">
+        <div class="event-time">13h30</div>
+        <div class="event-name">Cérémonie religieuse</div>
+        <div class="event-place">Cathédrale de la Résurrection</div>
+        <div class="event-address">Cours Monseigneur Roméro<br>Évry-Courcouronnes, 91000</div>
+        <a class="map-btn" href="https://maps.google.com/?q=Cathédrale+de+la+Résurrection+Évry" target="_blank">Voir sur la carte</a>
+      </div></div>
+      <div class="event"><div class="event-inner">
+        <div class="event-time">17h00 — 04h00</div>
+        <div class="event-name">Réception</div>
+        <div class="event-place">LOKUS · Salle de Réceptions 77</div>
+        <div class="event-address">2000 Rue Denis Papin<br>Réau, 77550</div>
+        <div class="schedule">
+          <div class="schedule-item"><span>Vin d'honneur</span><span>17h00</span></div>
+          <div class="schedule-item"><span>Ouverture de la salle</span><span>18h00</span></div>
+          <div class="schedule-item"><span>Dîner</span><span>21h00</span></div>
+          <div class="schedule-item"><span>Fin de soirée</span><span>04h00</span></div>
+        </div>
+        <a class="map-btn" href="https://maps.google.com/?q=2000+Rue+Denis+Papin+Réau+77550" target="_blank">Voir sur la carte</a>
+      </div></div>
+    </div>
+    <svg class="flower" width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-top:1rem;opacity:.3">
+      <g stroke="#e8d5b7" stroke-width="0.65" fill="none">
+        <path d="M50,50 C47,39 44,28 50,17 C56,28 53,39 50,50Z"/><path d="M50,50 C61,47 72,44 83,50 C72,56 61,53 50,50Z"/><path d="M50,50 C53,61 56,72 50,83 C44,72 47,61 50,50Z"/><path d="M50,50 C39,53 28,56 17,50 C28,44 39,47 50,50Z"/>
+        <path d="M50,50 C55,38 63,31 74,28 C71,39 63,47 50,50Z"/><path d="M50,50 C62,55 69,63 72,74 C61,71 53,63 50,50Z"/><path d="M50,50 C45,62 37,69 26,72 C29,61 37,53 50,50Z"/><path d="M50,50 C38,45 31,37 28,26 C39,29 47,37 50,50Z"/>
+        <circle cx="50" cy="50" r="9" stroke-opacity=".4"/><circle cx="50" cy="50" r="2.2" fill="#e8d5b7" stroke="none" opacity=".4"/>
+      </g>
+    </svg>
+    <button class="nav-back-link" style="margin-top:3rem;display:inline-block;" onclick="showPage('important')">Informations importantes →</button>
+  </main>
+  <nav class="bottom-nav"><div>
+    <button onclick="showPage('accueil')">Accueil</button><button onclick="showPage('histoire')">Notre Histoire</button>
+    <button onclick="showPage('programme')">Programme</button><button onclick="showPage('important')">Infos importantes</button><button onclick="showPage('faq')">FAQ</button>
+  </div></nav>
+</div>
+
+<!-- ════════════════════════════════
+     PAGE INFOS IMPORTANTES
+════════════════════════════════ -->
+<div id="page-important" class="page">
+  <nav class="sub-nav"><button class="nav-back-link" onclick="showPage('accueil')">← Retour à l'invitation</button></nav>
+  <main class="sub-content" style="max-width:500px;">
+    <p class="page-title">À savoir</p>
+    <svg class="flower" width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:2.5rem;opacity:.52">
+      <g stroke="#e8d5b7" stroke-width="0.65" fill="none">
+        <path d="M50,50 C47,39 44,28 50,17 C56,28 53,39 50,50Z"/><path d="M50,50 C61,47 72,44 83,50 C72,56 61,53 50,50Z"/><path d="M50,50 C53,61 56,72 50,83 C44,72 47,61 50,50Z"/><path d="M50,50 C39,53 28,56 17,50 C28,44 39,47 50,50Z"/>
+        <path d="M50,50 C55,38 63,31 74,28 C71,39 63,47 50,50Z"/><path d="M50,50 C62,55 69,63 72,74 C61,71 53,63 50,50Z"/><path d="M50,50 C45,62 37,69 26,72 C29,61 37,53 50,50Z"/><path d="M50,50 C38,45 31,37 28,26 C39,29 47,37 50,50Z"/>
+        <circle cx="50" cy="50" r="9" stroke-opacity=".45"/><circle cx="50" cy="50" r="2.2" fill="#e8d5b7" stroke="none" opacity=".6"/>
+      </g>
+    </svg>
+    <div class="card">
+      <span class="card-number">1</span><span class="card-title">Traiteur</span><div class="card-divider"></div>
+      <p class="card-body">Nous vous remercions de bien vouloir respecter l'horaire indiqué, le traiteur ayant, lui aussi, des contraintes à honorer pour un service à l'assiette.</p>
+    </div>
+    <div class="card">
+      <span class="card-number">2</span><span class="card-title">Enfants</span><div class="card-divider"></div>
+      <p class="card-body">Nous en comptons un grand nombre dans nos familles. Nous ne sommes pas en mesure d'accueillir d'autres enfants que nos neveux ou nièces directs.</p>
+    </div>
+    <div class="card">
+      <span class="card-number">3</span><span class="card-title">Cadeaux</span><div class="card-divider"></div>
+      <p class="card-body">Notre foyer étant déjà garni, votre présence est notre plus beau cadeau. Cela dit, une petite enveloppe sera toujours la bienvenue — nous vous en remercions par avance.</p>
+    </div>
+    <svg class="flower" width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-top:.5rem;opacity:.3">
+      <g stroke="#e8d5b7" stroke-width="0.65" fill="none">
+        <path d="M50,50 C47,39 44,28 50,17 C56,28 53,39 50,50Z"/><path d="M50,50 C61,47 72,44 83,50 C72,56 61,53 50,50Z"/><path d="M50,50 C53,61 56,72 50,83 C44,72 47,61 50,50Z"/><path d="M50,50 C39,53 28,56 17,50 C28,44 39,47 50,50Z"/>
+        <path d="M50,50 C55,38 63,31 74,28 C71,39 63,47 50,50Z"/><path d="M50,50 C62,55 69,63 72,74 C61,71 53,63 50,50Z"/><path d="M50,50 C45,62 37,69 26,72 C29,61 37,53 50,50Z"/><path d="M50,50 C38,45 31,37 28,26 C39,29 47,37 50,50Z"/>
+        <circle cx="50" cy="50" r="9" stroke-opacity=".4"/><circle cx="50" cy="50" r="2.2" fill="#e8d5b7" stroke="none" opacity=".4"/>
+      </g>
+    </svg>
+    <button class="nav-back-link" style="margin-top:3rem;display:inline-block;" onclick="showPage('faq')">FAQ →</button>
+  </main>
+  <nav class="bottom-nav"><div>
+    <button onclick="showPage('accueil')">Accueil</button><button onclick="showPage('histoire')">Notre Histoire</button>
+    <button onclick="showPage('programme')">Programme</button><button onclick="showPage('important')">Infos importantes</button><button onclick="showPage('faq')">FAQ</button>
+  </div></nav>
+</div>
+
+<!-- ════════════════════════════════
+     PAGE FAQ
+════════════════════════════════ -->
+<div id="page-faq" class="page">
+  <nav class="sub-nav"><button class="nav-back-link" onclick="showPage('accueil')">← Retour à l'invitation</button></nav>
+  <main class="sub-content" style="max-width:520px;">
+    <p class="page-title">FAQ</p>
+    <svg class="flower" width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:2.5rem;opacity:.52">
+      <g stroke="#e8d5b7" stroke-width="0.65" fill="none">
+        <path d="M50,50 C47,39 44,28 50,17 C56,28 53,39 50,50Z"/><path d="M50,50 C61,47 72,44 83,50 C72,56 61,53 50,50Z"/><path d="M50,50 C53,61 56,72 50,83 C44,72 47,61 50,50Z"/><path d="M50,50 C39,53 28,56 17,50 C28,44 39,47 50,50Z"/>
+        <path d="M50,50 C55,38 63,31 74,28 C71,39 63,47 50,50Z"/><path d="M50,50 C62,55 69,63 72,74 C61,71 53,63 50,50Z"/><path d="M50,50 C45,62 37,69 26,72 C29,61 37,53 50,50Z"/><path d="M50,50 C38,45 31,37 28,26 C39,29 47,37 50,50Z"/>
+        <circle cx="50" cy="50" r="9" stroke-opacity=".45"/><circle cx="50" cy="50" r="2.2" fill="#e8d5b7" stroke="none" opacity=".6"/>
+      </g>
+    </svg>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="faqToggle(this)"><span class="faq-q-text">À quelle heure dois-je arriver à la cérémonie ?</span><span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Pour le bon déroulement de la cérémonie, nous souhaitons que nos invités soient ponctuels. Merci d'arriver <strong style="color:var(--cream);">30 minutes avant l'heure indiquée</strong>.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="faqToggle(this)"><span class="faq-q-text">Existe-t-il un code vestimentaire ?</span><span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner"><strong style="color:var(--cream);">Chic et classe.</strong> Aucune couleur n'est imposée. Nous voulons que vous soyez à l'aise — si les talons sont trop hauts ou si le bouton de la chemise est trop serré, laissez-les à la maison.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="faqToggle(this)"><span class="faq-q-text">L'invité peut-il inviter ?</span><span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner"><strong style="color:var(--cream);">Non.</strong> Aucun invité ne pourra en inviter un autre. Chaque invité sera contrôlé sur la liste à l'entrée. Merci de respecter cette consigne afin de ne pas perturber l'événement.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="faqToggle(this)"><span class="faq-q-text">Les enfants sont-ils les bienvenus ?</span><span class="faq-icon">+</span></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Nous adorons vos enfants, mais nous souhaitons que notre mariage reste une soirée de repos pour vous. Nous ne sommes pas en mesure d'accueillir d'autres enfants que nos <strong style="color:var(--cream);">neveux ou nièces directs</strong>.</div></div>
+      </div>
+    </div>
+    <svg class="flower" width="70" height="70" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-top:2.5rem;opacity:.3">
+      <g stroke="#e8d5b7" stroke-width="0.65" fill="none">
+        <path d="M50,50 C47,39 44,28 50,17 C56,28 53,39 50,50Z"/><path d="M50,50 C61,47 72,44 83,50 C72,56 61,53 50,50Z"/><path d="M50,50 C53,61 56,72 50,83 C44,72 47,61 50,50Z"/><path d="M50,50 C39,53 28,56 17,50 C28,44 39,47 50,50Z"/>
+        <path d="M50,50 C55,38 63,31 74,28 C71,39 63,47 50,50Z"/><path d="M50,50 C62,55 69,63 72,74 C61,71 53,63 50,50Z"/><path d="M50,50 C45,62 37,69 26,72 C29,61 37,53 50,50Z"/><path d="M50,50 C38,45 31,37 28,26 C39,29 47,37 50,50Z"/>
+        <circle cx="50" cy="50" r="9" stroke-opacity=".4"/><circle cx="50" cy="50" r="2.2" fill="#e8d5b7" stroke="none" opacity=".4"/>
+      </g>
+    </svg>
+    <button class="nav-back-link" style="margin-top:3rem;display:inline-block;" onclick="showPage('accueil')">Accueil →</button>
+  </main>
+  <nav class="bottom-nav"><div>
+    <button onclick="showPage('accueil')">Accueil</button><button onclick="showPage('histoire')">Notre Histoire</button>
+    <button onclick="showPage('programme')">Programme</button><button onclick="showPage('important')">Infos importantes</button><button onclick="showPage('faq')">FAQ</button>
+  </div></nav>
+</div>
+
+<!-- ════════════════════════════════
+     MODAL RSVP
+════════════════════════════════ -->
 <div class="modal-overlay" id="modal" onclick="overlayClose(event)">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">×</button>
-
-    <!-- ÉTAPE 1 : recherche par prénom -->
     <div id="step-search">
       <p class="modal-title">Présence</p>
       <p class="modal-sub">Syliane & Kevin — 27 Juin 2026</p>
       <input type="text" id="rsvp-name" placeholder="Votre prénom" oninput="clearError()" onkeydown="if(event.key==='Enter')rechercherGroupe()"/>
-      <p id="rsvp-error" style="display:none; font-size:.8rem; font-style:italic; color:rgba(220,100,100,.85); margin-top:-.5rem; margin-bottom:.8rem;"></p>
-      <div class="modal-btns" style="margin-top:.5rem">
-        <button class="mbtn mbtn-yes" onclick="rechercherGroupe()">Rechercher →</button>
-      </div>
+      <p id="rsvp-error" style="display:none;font-size:.8rem;font-style:italic;color:rgba(220,100,100,.85);margin-top:-.5rem;margin-bottom:.8rem;"></p>
+      <div class="modal-btns" style="margin-top:.5rem"><button class="mbtn mbtn-yes" onclick="rechercherGroupe()">Rechercher →</button></div>
     </div>
-
-    <!-- ÉTAPE 1b : choix si prénom en double -->
     <div id="step-choix" style="display:none">
       <p class="modal-title" style="font-size:2rem">Qui êtes-vous ?</p>
       <p class="modal-sub" style="margin-bottom:1.2rem">Plusieurs invités correspondent, choisissez votre groupe</p>
-      <div id="choix-list" style="display:flex; flex-direction:column; gap:.5rem;"></div>
+      <div id="choix-list" style="display:flex;flex-direction:column;gap:.5rem;"></div>
     </div>
-
-    <!-- ÉTAPE 2 : confirmation par membre -->
     <div id="step-groupe" style="display:none">
       <p class="modal-title" style="font-size:2rem" id="groupe-titre">Votre groupe</p>
       <p class="modal-sub" id="groupe-sub">Confirmez la présence de chaque membre</p>
-      <div id="membres-list" style="margin: 1.2rem 0; display:flex; flex-direction:column; gap:.75rem;"></div>
-      <button class="mbtn mbtn-yes" style="width:100%; margin-top:.5rem" onclick="confirmerGroupe()">Confirmer ✓</button>
+      <div id="membres-list" style="margin:1.2rem 0;display:flex;flex-direction:column;gap:.75rem;"></div>
+      <button class="mbtn mbtn-yes" style="width:100%;margin-top:.5rem" onclick="confirmerGroupe()">Confirmer ✓</button>
     </div>
-
-    <!-- ÉTAPE 3 : merci -->
-    <div id="step-merci" style="display:none; text-align:center">
+    <div id="step-merci" style="display:none;text-align:center">
       <span class="ty-script" id="ty-title">Merci !</span>
       <p class="ty-body" id="ty-body"></p>
     </div>
   </div>
 </div>
 
-<style>
-  .membre-row { display:flex; align-items:center; justify-content:space-between; padding:.6rem .2rem; border-bottom:1px solid rgba(232,213,183,.12); }
-  .membre-nom { font-family:'Cormorant Garamond',serif; font-size:1rem; font-style:italic; color:var(--cream); text-align:left; }
-  .membre-toggle { display:flex; gap:.4rem; }
-  .tog { padding:.35rem .7rem; font-family:'Cinzel',serif; font-size:.55rem; letter-spacing:.15em; border:1px solid rgba(232,213,183,.35); background:transparent; color:var(--muted); cursor:pointer; transition:all .25s; }
-  .tog.oui.actif { background:var(--cream); color:var(--black); border-color:var(--cream); }
-  .tog.non.actif { background:rgba(220,100,100,.25); color:rgba(255,180,180,.9); border-color:rgba(220,100,100,.5); }
-  nav a { color:rgba(232,213,183,0.45) !important; text-decoration:none !important; }
-  nav a:visited { color:rgba(232,213,183,0.45) !important; }
-  nav a:hover { color:var(--cream) !important; }
-  </style>
-
 <script>
-  /* ============================================================
-     LISTE DES GROUPES — modifiez ici librement
-     Chaque groupe = { nom: "Nom du groupe", membres: ["Prénom Nom", ...] }
-     Un invité seul = un groupe avec un seul membre
-  ============================================================ */
-  const GROUPES = [
+/* ── NAVIGATION SPA ── */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ── SPLASH + MUSIQUE ── */
+const music = document.getElementById('bg-music');
+music.volume = 0.15;
+const musicBtn = document.getElementById('music-btn');
+
+function enterSite() {
+  music.play().then(() => { musicBtn.textContent = '🎵'; }).catch(() => {});
+  const splash = document.getElementById('splash');
+  splash.style.opacity = '0';
+  setTimeout(() => splash.style.display = 'none', 900);
+}
+
+function toggleMusic() {
+  if (music.paused) { music.play().then(() => { musicBtn.textContent = '🎵'; }).catch(() => {}); }
+  else { music.pause(); musicBtn.textContent = '🔇'; }
+}
+
+/* ── COUNTDOWN ── */
+const W = new Date('2026-06-27T15:00:00');
+function tick() {
+  const d = W - new Date(); if (d <= 0) return;
+  document.getElementById('cd-d').textContent = Math.floor(d / 86400000);
+  document.getElementById('cd-h').textContent = Math.floor((d % 86400000) / 3600000);
+  document.getElementById('cd-m').textContent = Math.floor((d % 3600000) / 60000);
+  document.getElementById('cd-s').textContent = Math.floor((d % 60000) / 1000);
+}
+tick(); setInterval(tick, 1000);
+
+/* ── CARROUSEL ── */
+let carrIdx = 0;
+const slides = document.querySelectorAll('.carr-slide');
+const dots = document.querySelectorAll('.carr-dot');
+function carrGo(n) {
+  slides[carrIdx].classList.remove('carr-active'); dots[carrIdx].classList.remove('carr-dot-active');
+  carrIdx = (n + slides.length) % slides.length;
+  slides[carrIdx].classList.add('carr-active'); dots[carrIdx].classList.add('carr-dot-active');
+}
+function carrMove(dir) { carrGo(carrIdx + dir); }
+setInterval(() => carrMove(1), 4000);
+
+/* ── CALENDRIER ── */
+function toggleCalMenu() {
+  const d = document.getElementById('cal-dropdown');
+  d.style.display = d.style.display === 'none' ? 'block' : 'none';
+}
+document.addEventListener('click', e => {
+  const m = document.getElementById('cal-menu');
+  if (m && !m.contains(e.target)) document.getElementById('cal-dropdown').style.display = 'none';
+});
+function addToCalendar(type) {
+  document.getElementById('cal-dropdown').style.display = 'none';
+  const title = encodeURIComponent('Mariage Syliane & Kevin');
+  const details = encodeURIComponent('Cérémonie 13h30 — Cathédrale de la Résurrection, Évry\nRéception 17h00 — LOKUS, Réau 77550');
+  const loc = encodeURIComponent('Cathédrale de la Résurrection, Évry-Courcouronnes');
+  const s = '20260627T130000', e2 = '20260628T040000';
+  if (type === 'google') { window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${s}/${e2}&details=${details}&location=${loc}`, '_blank'); }
+  else {
+    const ics = ['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',`DTSTART:${s}`,`DTEND:${e2}`,'SUMMARY:Mariage Syliane & Kevin',`LOCATION:Cathédrale de la Résurrection\\, Évry`,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics],{type:'text/calendar'})); a.download='mariage.ics'; a.click();
+  }
+}
+
+/* ── FAQ ── */
+function faqToggle(btn) {
+  const item = btn.closest('.faq-item'), wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+/* ── RSVP ── */
+const GROUPES = [
     { nom: "Wisman", membres: ["Wisman"] },
     { nom: "Doriane & Jonathan", membres: ["Doriane", "Jonathan", "Enfant"] },
     { nom: "Denis", membres: ["Denis"] },
@@ -374,329 +680,86 @@
     { nom: "Jean Claude", membres: ["Jean Claude", "Jean Claude +1"] },
     { nom: "Carla & Benny", membres: ["Carla", "Benny"] },
     { nom: "Syliane & Kevin", membres: ["Syliane", "Kevin", "Enfant 1", "Enfant 2"] },
-  ];
+];
 
-  /* Countdown */
-  const W = new Date('2026-06-27T15:00:00');
-  function tick(){
-    const d=W-new Date();
-    if(d<=0)return;
-    document.getElementById('cd-d').textContent=Math.floor(d/86400000);
-    document.getElementById('cd-h').textContent=Math.floor((d%86400000)/3600000);
-    document.getElementById('cd-m').textContent=Math.floor((d%3600000)/60000);
-    document.getElementById('cd-s').textContent=Math.floor((d%60000)/1000);
-  }
-  tick(); setInterval(tick,1000);
-
-  /* Modal */
-  function openModal(){ document.getElementById('modal').classList.add('open'); }
-  function closeModal(){
-    document.getElementById('modal').classList.remove('open');
-    setTimeout(()=>{
-      document.getElementById('step-search').style.display='block';
-      document.getElementById('step-choix').style.display='none';
-      document.getElementById('step-groupe').style.display='none';
-      document.getElementById('step-merci').style.display='none';
-      document.getElementById('rsvp-name').value='';
-      document.getElementById('rsvp-error').style.display='none';
-    },400);
-  }
-  function overlayClose(e){ if(e.target===document.getElementById('modal')) closeModal(); }
-  function clearError(){ document.getElementById('rsvp-error').style.display='none'; }
-
-  function rechercherGroupe(){
-    const raw = document.getElementById('rsvp-name').value.trim().toLowerCase();
-    if(!raw){ showError('Veuillez entrer votre prénom.'); return; }
-
-    const groupesTrouves = GROUPES.filter(g =>
-      g.membres.some(m => m.toLowerCase().startsWith(raw) || m.toLowerCase().split(' ').some(part => part === raw))
-    );
-
-    if(groupesTrouves.length === 0){ showError('Prénom non trouvé sur la liste des invités.'); return; }
-
-    // Si plusieurs groupes trouvés, afficher un choix
-    if(groupesTrouves.length > 1){
-      document.getElementById('step-search').style.display='none';
-      document.getElementById('step-choix').style.display='block';
-      const choixList = document.getElementById('choix-list');
-      choixList.innerHTML = '';
-      groupesTrouves.forEach(g => {
-        const btn = document.createElement('button');
-        btn.className = 'mbtn mbtn-no';
-        btn.style.cssText = 'width:100%; margin-bottom:.5rem; text-align:left; padding:.8rem 1rem; font-size:.75rem;';
-        btn.textContent = g.membres.join(', ');
-        btn.onclick = () => afficherGroupe(g);
-        choixList.appendChild(btn);
-      });
-      return;
-    }
-
-    afficherGroupe(groupesTrouves[0]);
-  }
-
-  function afficherGroupe(groupe){
-    document.getElementById('step-search').style.display='none';
-    document.getElementById('step-choix').style.display='none';
-    document.getElementById('step-groupe').style.display='block';
-    document.getElementById('groupe-titre').textContent = groupe.nom;
-    document.getElementById('groupe-sub').textContent = groupe.membres.length > 1
-      ? 'Confirmez la présence de chaque membre'
-      : 'Confirmez votre présence';
-
-    const list = document.getElementById('membres-list');
-    list.innerHTML = '';
-    groupe.membres.forEach((m, i) => {
-      const row = document.createElement('div');
-      row.className = 'membre-row';
-      row.innerHTML = `
-        <span class="membre-nom">${m}</span>
-        <div class="membre-toggle">
-          <button class="tog oui" id="oui-${i}" onclick="toggleMembre(${i},'oui')">✓ Oui</button>
-          <button class="tog non" id="non-${i}" onclick="toggleMembre(${i},'non')">✗ Non</button>
-        </div>`;
-      list.appendChild(row);
+function openModal() { document.getElementById('modal').classList.add('open'); }
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  setTimeout(() => {
+    ['step-search','step-choix','step-groupe','step-merci'].forEach((id,i) => {
+      document.getElementById(id).style.display = i===0 ? 'block' : 'none';
     });
-    list.dataset.groupe = JSON.stringify(groupe);
-  }
+    document.getElementById('rsvp-name').value = '';
+    document.getElementById('rsvp-error').style.display = 'none';
+  }, 400);
+}
+function overlayClose(e) { if (e.target === document.getElementById('modal')) closeModal(); }
+function clearError() { document.getElementById('rsvp-error').style.display = 'none'; }
 
-  function toggleMembre(i, choix){
-    document.getElementById(`oui-${i}`).classList.toggle('actif', choix==='oui');
-    document.getElementById(`non-${i}`).classList.toggle('actif', choix==='non');
-  }
-
-  function confirmerGroupe(){
-    const groupe = JSON.parse(document.getElementById('membres-list').dataset.groupe);
-    const presents = [], absents = [];
-    groupe.membres.forEach((m,i)=>{
-      if(document.getElementById(`oui-${i}`).classList.contains('actif')) presents.push(m);
-      else if(document.getElementById(`non-${i}`).classList.contains('actif')) absents.push(m);
-      else absents.push(m); // non répondu = absent par défaut
+function rechercherGroupe() {
+  const raw = document.getElementById('rsvp-name').value.trim().toLowerCase();
+  if (!raw) { showError('Veuillez entrer votre prénom.'); return; }
+  const found = GROUPES.filter(g => g.membres.some(m => m.toLowerCase().startsWith(raw) || m.toLowerCase().split(' ').some(p => p === raw)));
+  if (!found.length) { showError('Prénom non trouvé sur la liste des invités.'); return; }
+  if (found.length > 1) {
+    document.getElementById('step-search').style.display = 'none';
+    document.getElementById('step-choix').style.display = 'block';
+    const cl = document.getElementById('choix-list'); cl.innerHTML = '';
+    found.forEach(g => {
+      const btn = document.createElement('button');
+      btn.className = 'mbtn mbtn-no';
+      btn.style.cssText = 'width:100%;margin-bottom:.5rem;text-align:left;padding:.8rem 1rem;font-size:.75rem;';
+      btn.textContent = g.membres.join(', ');
+      btn.onclick = () => afficherGroupe(g);
+      cl.appendChild(btn);
     });
-
-    document.getElementById('step-groupe').style.display='none';
-    document.getElementById('step-merci').style.display='block';
-    document.getElementById('ty-title').textContent = presents.length > 0 ? 'Merci !' : '♡';
-
-    let msg = '';
-    if(presents.length)
-      msg += `<strong style="color:var(--cream-light)">${presents.join(', ')}</strong><br>sera présent(e) — nous avons hâte de vous voir ! ♡`;
-    if(absents.length && presents.length)
-      msg += `<br><br>`;
-    if(absents.length)
-      msg += `<span style="color:var(--muted)">${absents.join(', ')}<br>nous manquera ce jour-là.</span>`;
-    document.getElementById('ty-body').innerHTML = msg;
-
-    // Envoi vers Google Sheets via iframe cachée
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzdX1C5mASV-kNE7RNL7eGFyIeq-erBImNqx7ug8rDi76LYBsQTHjxpfK-JdK4sV5Om-A/exec';
-    const params = new URLSearchParams({
-      groupe: groupe.nom,
-      presents: presents.join(', ') || '—',
-      absents: absents.join(', ') || '—',
-      nb_presents: presents.length,
-      nb_absents: absents.length
-    });
-    let iframe = document.getElementById('rsvp-iframe');
-    if (!iframe) {
-      iframe = document.createElement('iframe');
-      iframe.id = 'rsvp-iframe';
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-    }
-    iframe.src = SCRIPT_URL + '?' + params.toString();
+    return;
   }
+  afficherGroupe(found[0]);
+}
 
-  function showError(msg){
-    const e = document.getElementById('rsvp-error');
-    e.textContent = msg; e.style.display='block';
-  }
-
-
-  /* Carrousel */
-  let carrIdx = 0;
-  const slides = document.querySelectorAll('.carr-slide');
-  const dots   = document.querySelectorAll('.carr-dot');
-  function carrGo(n){
-    slides[carrIdx].classList.remove('carr-active');
-    dots[carrIdx].classList.remove('carr-dot-active');
-    carrIdx = (n + slides.length) % slides.length;
-    slides[carrIdx].classList.add('carr-active');
-    dots[carrIdx].classList.add('carr-dot-active');
-  }
-  function carrMove(dir){ carrGo(carrIdx + dir); }
-  setInterval(()=>carrMove(1), 4000);
-
-  function submit(){}
-
-  // Calendrier
-  function toggleCalMenu() {
-    const d = document.getElementById('cal-dropdown');
-    d.style.display = d.style.display === 'none' ? 'block' : 'none';
-  }
-  document.addEventListener('click', function(e) {
-    if (!document.getElementById('cal-menu').contains(e.target)) {
-      document.getElementById('cal-dropdown').style.display = 'none';
-    }
+function afficherGroupe(groupe) {
+  document.getElementById('step-search').style.display = 'none';
+  document.getElementById('step-choix').style.display = 'none';
+  document.getElementById('step-groupe').style.display = 'block';
+  document.getElementById('groupe-titre').textContent = groupe.nom;
+  document.getElementById('groupe-sub').textContent = groupe.membres.length > 1 ? 'Confirmez la présence de chaque membre' : 'Confirmez votre présence';
+  const list = document.getElementById('membres-list'); list.innerHTML = '';
+  groupe.membres.forEach((m, i) => {
+    const row = document.createElement('div'); row.className = 'membre-row';
+    row.innerHTML = `<span class="membre-nom">${m}</span><div class="membre-toggle"><button class="tog oui" id="oui-${i}" onclick="toggleMembre(${i},'oui')">✓ Oui</button><button class="tog non" id="non-${i}" onclick="toggleMembre(${i},'non')">✗ Non</button></div>`;
+    list.appendChild(row);
   });
+  list.dataset.groupe = JSON.stringify(groupe);
+}
 
-  function addToCalendar(type) {
-    document.getElementById('cal-dropdown').style.display = 'none';
-    const title = encodeURIComponent('Mariage Syliane & Kevin');
-    const details = encodeURIComponent('Cérémonie religieuse à 13h30 — Cathédrale de la Résurrection, Évry\nRéception à 17h00 — LOKUS, 2000 Rue Denis Papin, Réau 77550');
-    const location = encodeURIComponent('Cathédrale de la Résurrection, Cours Monseigneur Roméro, Évry-Courcouronnes');
-    const start = '20260627T130000';
-    const end   = '20260628T040000';
+function toggleMembre(i, choix) {
+  document.getElementById(`oui-${i}`).classList.toggle('actif', choix === 'oui');
+  document.getElementById(`non-${i}`).classList.toggle('actif', choix === 'non');
+}
 
-    if (type === 'google') {
-      const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&location=${location}`;
-      window.open(url, '_blank');
-    } else if (type === 'apple' || type === 'outlook') {
-      const ics = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//Syliane & Kevin//FR',
-        'BEGIN:VEVENT',
-        `DTSTART:${start}`,
-        `DTEND:${end}`,
-        `SUMMARY:Mariage Syliane & Kevin`,
-        `DESCRIPTION:Cérémonie religieuse à 13h30 — Cathédrale de la Résurrection\\nRéception à 17h00 — LOKUS\\, 2000 Rue Denis Papin\\, Réau 77550`,
-        `LOCATION:Cathédrale de la Résurrection\\, Cours Monseigneur Roméro\\, Évry-Courcouronnes`,
-        'STATUS:CONFIRMED',
-        'END:VEVENT',
-        'END:VCALENDAR'
-      ].join('\r\n');
-      const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'mariage-syliane-kevin.ics';
-      link.click();
-    }
-  }
+function confirmerGroupe() {
+  const groupe = JSON.parse(document.getElementById('membres-list').dataset.groupe);
+  const presents = [], absents = [];
+  groupe.membres.forEach((m, i) => {
+    (document.getElementById(`oui-${i}`).classList.contains('actif') ? presents : absents).push(m);
+  });
+  document.getElementById('step-groupe').style.display = 'none';
+  document.getElementById('step-merci').style.display = 'block';
+  document.getElementById('ty-title').textContent = presents.length > 0 ? 'Merci !' : '♡';
+  let msg = '';
+  if (presents.length) msg += `<strong style="color:var(--cream-light)">${presents.join(', ')}</strong><br>sera présent(e) — nous avons hâte de vous voir ! ♡`;
+  if (absents.length && presents.length) msg += '<br><br>';
+  if (absents.length) msg += `<span style="color:var(--muted)">${absents.join(', ')}<br>nous manquera ce jour-là.</span>`;
+  document.getElementById('ty-body').innerHTML = msg;
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzdX1C5mASV-kNE7RNL7eGFyIeq-erBImNqx7ug8rDi76LYBsQTHjxpfK-JdK4sV5Om-A/exec';
+  const params = new URLSearchParams({ groupe: groupe.nom, presents: presents.join(', ')||'—', absents: absents.join(', ')||'—', nb_presents: presents.length, nb_absents: absents.length });
+  let iframe = document.getElementById('rsvp-iframe');
+  if (!iframe) { iframe = document.createElement('iframe'); iframe.id='rsvp-iframe'; iframe.style.display='none'; document.body.appendChild(iframe); }
+  iframe.src = SCRIPT_URL + '?' + params.toString();
+}
+
+function showError(msg) { const e = document.getElementById('rsvp-error'); e.textContent = msg; e.style.display = 'block'; }
 </script>
-  <!-- Musique de fond -->
-  <audio id="bg-music" loop>
-    <source src="musique.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- Bouton musique -->
-  <button id="music-btn" onclick="toggleMusic()" style="
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 2.8rem;
-    height: 2.8rem;
-    border-radius: 50%;
-    background: rgba(10,10,10,0.7);
-    border: 1px solid rgba(232,213,183,0.4);
-    color: var(--cream);
-    font-size: 1.2rem;
-    cursor: pointer;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(6px);
-    transition: all .3s;
-  ">🎵</button>
-
-  <script>
-    const music = document.getElementById('bg-music');
-    music.volume = 0.15;
-    let playing = false;
-
-    // Démarrer au premier clic sur la page
-    document.addEventListener('click', function startOnce() {
-      if (!playing) {
-        music.play().then(() => {
-          playing = true;
-          document.getElementById('music-btn').textContent = '🎵';
-        }).catch(() => {});
-      }
-      document.removeEventListener('click', startOnce);
-    }, { once: false });
-
-    // Essai autoplay
-    window.addEventListener('load', () => {
-      music.play().then(() => {
-        playing = true;
-      }).catch(() => {});
-    });
-
-    function toggleMusic() {
-      if (playing) {
-        music.pause();
-        playing = false;
-        document.getElementById('music-btn').textContent = '🔇';
-      } else {
-        music.play();
-        playing = true;
-        document.getElementById('music-btn').textContent = '🎵';
-      }
-    }
-  </script>
-
-  <!-- Musique de fond continue -->
-  <audio id="bg-music" loop>
-    <source src="musique.mp3" type="audio/mpeg">
-  </audio>
-
-  <button id="music-btn" onclick="toggleMusic()" style="
-    position:fixed; bottom:1.5rem; right:1.5rem;
-    width:2.8rem; height:2.8rem; border-radius:50%;
-    background:rgba(10,10,10,0.7); border:1px solid rgba(232,213,183,0.4);
-    color:#e8d5b7; font-size:1.2rem; cursor:pointer; z-index:9999;
-    display:flex; align-items:center; justify-content:center;
-    backdrop-filter:blur(6px); transition:all .3s;
-  ">🎵</button>
-
-  <script>
-    (function(){
-      const music = document.getElementById('bg-music');
-      music.volume = 0.15;
-      const btn = document.getElementById('music-btn');
-      const savedTime    = parseFloat(localStorage.getItem('musicTime') || '0');
-      const savedPlaying = localStorage.getItem('musicPlaying') !== 'false';
-      music.currentTime = isNaN(savedTime) ? 0 : savedTime;
-      setInterval(() => {
-        if (!music.paused) localStorage.setItem('musicTime', music.currentTime);
-      }, 500);
-      function setBtn(isPlaying) {
-        btn.textContent = isPlaying ? '🎵' : '🔇';
-        localStorage.setItem('musicPlaying', isPlaying);
-      }
-      function tryPlay() {
-        music.play().then(() => setBtn(true)).catch(() => {});
-      }
-      if (savedPlaying) {
-        window.addEventListener('load', tryPlay);
-      } else {
-        setBtn(false);
-      }
-      window.toggleMusic = function() {
-        if (music.paused) { tryPlay(); }
-        else { music.pause(); setBtn(false); }
-      };
-    })();
-  </script>
-
-  <script>
-    function enterSite() {
-      const music = document.getElementById('bg-music');
-      if (music) {
-        music.play().then(() => {
-          localStorage.setItem('musicPlaying', 'true');
-          localStorage.setItem('musicTime', '0');
-          document.getElementById('music-btn').textContent = '🎵';
-        }).catch(() => {});
-      }
-      const splash = document.getElementById('splash');
-      splash.style.opacity = '0';
-      setTimeout(() => splash.style.display = 'none', 800);
-      sessionStorage.setItem('splashDone', '1');
-    }
-    if (sessionStorage.getItem('splashDone')) {
-      document.getElementById('splash').style.display = 'none';
-    }
-  </script>
-
 </body>
 </html>
