@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Notre Histoire — Syliane & Kevin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --black:#0a0a0a; --cream:#e8d5b7; --cream-light:#f0e4cc; --muted:rgba(232,213,183,0.5); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--cream); font-family:'Cormorant Garamond',serif; font-weight:300; -webkit-font-smoothing:antialiased; min-height:100vh; display:flex; flex-direction:column; align-items:center; }
+
+    /* NAV retour */
+    .nav-back { width:100%; padding:1.8rem 2rem 0; text-align:center; opacity:0; animation:fadeUp .8s .1s forwards; }
+    .nav-back a { font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.25em; text-transform:uppercase; color:var(--muted); text-decoration:none; border-bottom:1px solid rgba(232,213,183,0.2); padding-bottom:2px; transition:color .3s; }
+    .nav-back a:hover { color:var(--cream); }
+
+    /* CONTENT */
+    .content { text-align:center; padding:3.5rem 1.5rem 5rem; max-width:480px; width:100%; }
+
+    .histoire-section { opacity:0; animation:fadeUp 1s .3s forwards; }
+    .histoire-script { font-family:'Great Vibes',cursive; color:var(--cream-light); display:block; font-size:clamp(2.8rem,10vw,4.5rem); line-height:1.25; margin-bottom:1.8rem; }
+    .histoire-photo { width:min(300px,85vw); border-radius:4px; margin:0 auto 2rem; display:block; box-shadow:0 8px 32px rgba(0,0,0,.5); }
+    .histoire-body { font-size:1rem; line-height:2; color:rgba(232,213,183,.78); max-width:360px; margin:0 auto; text-align:center; }
+
+    .flower { display:block; margin:0 auto; }
+
+    /* Divider */
+    .divider { width:1px; height:3rem; background:rgba(232,213,183,0.15); margin:2.5rem auto; }
+
+    /* retour bas de page */
+    .back-link { margin-top:3rem; font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.25em; text-transform:uppercase; color:var(--muted); text-decoration:none; border-bottom:1px solid rgba(232,213,183,0.2); padding-bottom:2px; transition:color .3s; display:inline-block; }
+    .back-link:hover { color:var(--cream); }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+      @media (max-width:480px) {
+      .content { padding:2.5rem 1.2rem 4rem; }
+      .event-inner { padding:1.2rem 1.1rem; margin:0 .8rem; }
+    }
+    nav a { color:rgba(232,213,183,0.45) !important; text-decoration:none !important; }
+  nav a:visited { color:rgba(232,213,183,0.45) !important; }
+  nav a:hover { color:var(--cream) !important; }
+  </style>
+</head>
+<body>
+
+  <nav class="nav-back">
+    <a href="/">← Retour à l'invitation</a>
+  </nav>
+
+  <main class="content">
+    <div class="histoire-section">
+
+      <!-- Flower haut -->
+      <svg class="flower" width="76" height="76" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:1.8rem; opacity:.7">
+        <g stroke="#e8d5b7" stroke-width="0.75">
+          <ellipse cx="40" cy="24" rx="5" ry="14"/><ellipse cx="40" cy="56" rx="5" ry="14"/>
+          <ellipse cx="24" cy="40" rx="14" ry="5"/><ellipse cx="56" cy="40" rx="14" ry="5"/>
+          <ellipse cx="27.5" cy="27.5" rx="5" ry="14" transform="rotate(-45 27.5 27.5)"/>
+          <ellipse cx="52.5" cy="52.5" rx="5" ry="14" transform="rotate(-45 52.5 52.5)"/>
+          <ellipse cx="52.5" cy="27.5" rx="5" ry="14" transform="rotate(45 52.5 27.5)"/>
+          <ellipse cx="27.5" cy="52.5" rx="5" ry="14" transform="rotate(45 27.5 52.5)"/>
+          <circle cx="40" cy="40" r="7"/><circle cx="40" cy="40" r="2.5" fill="#e8d5b7" stroke="none" opacity=".6"/>
+        </g>
+      </svg>
+
+      <span class="histoire-script">Notre Histoire</span>
+
+      <img class="histoire-photo" src="histoire.png" alt="Syliane & Kevin devant la Tour Eiffel" />
+
+      <p class="histoire-body">
+        Après dix ans de vie commune, faits de complicité, de rires, et de petits défis du quotidien, c'est sur l'île de la Réunion que nous nous sommes dit "oui", au cœur de paysages magnifique et d'une atmosphère unique, gravée à jamais dans nos cœurs.<br><br>
+        Notre bonheur s'est agrandi avec l'arrivée de nos deux enfants, Jailyss et Owenn, qui illuminent notre quotidien et nous rappellent chaque jour la beauté de la vie de famille.<br><br>
+        Aujourd'hui, entourés de nos proches nous avons hâte de célébrer notre amour et de partager cette nouvelle étape de notre vie avec ceux qui comptent le plus pour nous.
+      </p>
+
+      <div class="divider"></div>
+
+      <!-- Flower bas -->
+      <svg class="flower" width="76" height="76" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:.45">
+        <g stroke="#e8d5b7" stroke-width="0.75">
+          <ellipse cx="40" cy="24" rx="5" ry="14"/><ellipse cx="40" cy="56" rx="5" ry="14"/>
+          <ellipse cx="24" cy="40" rx="14" ry="5"/><ellipse cx="56" cy="40" rx="14" ry="5"/>
+          <ellipse cx="27.5" cy="27.5" rx="5" ry="14" transform="rotate(-45 27.5 27.5)"/>
+          <ellipse cx="52.5" cy="52.5" rx="5" ry="14" transform="rotate(-45 52.5 52.5)"/>
+          <ellipse cx="52.5" cy="27.5" rx="5" ry="14" transform="rotate(45 52.5 27.5)"/>
+          <ellipse cx="27.5" cy="52.5" rx="5" ry="14" transform="rotate(45 27.5 52.5)"/>
+          <circle cx="40" cy="40" r="7"/><circle cx="40" cy="40" r="2.5" fill="#e8d5b7" stroke="none" opacity=".6"/>
+        </g>
+      </svg>
+
+      <a class="back-link" href="/programme.html">Programme →</a>
+
+    </div>
+  </main>
+
+  <!-- NAV BAS -->
+  <nav style="width:100%; padding:2rem 1.5rem 3rem; text-align:center; border-top:1px solid rgba(232,213,183,0.1); margin-top:2rem;">
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:.8rem 1.5rem;">
+      <a href="/" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">Accueil</a>
+      <a href="/histoire.html" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">Notre Histoire</a>
+      <a href="/programme.html" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">Programme</a>
+      <a href="/important.html" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">Infos importantes</a>
+      <a href="/faq.html" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">FAQ</a>
+    </div>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Syliane & Kevin — 27 Juin 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --black:#0a0a0a; --cream:#e8d5b7; --cream-light:#f0e4cc; --muted:rgba(232,213,183,0.5); }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--cream); font-family:'Cormorant Garamond',serif; font-weight:300; -webkit-font-smoothing:antialiased; }
+
+    /* HERO */
+    .hero { position:relative; width:100%; height:100svh; min-height:480px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+    .hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(10,10,10,0.1) 0%,rgba(10,10,10,0) 30%,rgba(10,10,10,0.65) 75%,rgba(10,10,10,1) 100%); }
+
+    /* CONTENT */
+    .content { background:var(--black); text-align:center; padding:0 1.5rem 5rem; }
+
+    /* Sections */
+    .names-section { padding-top:4rem; opacity:0; animation:fadeUp 1s .2s forwards; }
+    .date-section  { margin-top:3rem; opacity:0; animation:fadeUp 1s .5s forwards; }
+    .countdown     { display:flex; justify-content:center; gap:1.5rem; margin-top:1.2rem; font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.05em; color:var(--muted); opacity:0; animation:fadeUp 1s .7s forwards; }
+    .countdown b   { color:var(--cream); font-weight:400; }
+    .rsvp-section  { margin-top:2.5rem; opacity:0; animation:fadeUp 1s .85s forwards; }
+    .families-section { margin-top:4.5rem; padding-top:3rem; border-top:1px solid rgba(232,213,183,0.1); opacity:0; animation:fadeUp 1s 1s forwards; }
+
+    .histoire-section { margin-top:4.5rem; padding-top:3rem; border-top:1px solid rgba(232,213,183,0.1); opacity:0; animation:fadeUp 1s 1.15s forwards; }
+    .histoire-script { font-size:clamp(2rem,8vw,3.5rem); line-height:1.25; margin-bottom:1.6rem; }
+    .histoire-photo { width:min(280px,80vw); border-radius:4px; margin:0 auto 1.8rem; display:block; box-shadow:0 8px 32px rgba(0,0,0,.5); }
+    .histoire-body { font-size:.97rem; line-height:1.9; color:rgba(232,213,183,.78); max-width:340px; margin:0 auto; text-align:center; }
+    /* Typography */
+    .script { font-family:'Great Vibes',cursive; color:var(--cream-light); display:block; }
+    .name-script { font-size:clamp(3rem,12vw,5.5rem); line-height:1.1; }
+    .and-text { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:.95rem; color:var(--muted); letter-spacing:.2em; display:block; margin:.7rem 0; }
+    .date-script { font-size:clamp(2.4rem,10vw,4.5rem); line-height:1.2; }
+    .families-script { font-size:clamp(2rem,8vw,3.5rem); line-height:1.25; margin-bottom:1.4rem; }
+    .families-body { font-size:1rem; line-height:1.9; color:rgba(232,213,183,.78); max-width:340px; margin:0 auto 1.5rem; }
+    .verse { font-style:italic; font-size:.9rem; color:var(--muted); line-height:1.8; max-width:300px; margin:0 auto; }
+    .verse cite { display:block; font-style:normal; font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; margin-top:.5rem; color:rgba(232,213,183,.35); }
+
+    /* RSVP btn */
+    .rsvp-btn { display:inline-block; width:min(280px,80%); padding:1rem 2rem; background:var(--cream); color:var(--black); font-family:'Cinzel',serif; font-size:.78rem; letter-spacing:.25em; text-transform:uppercase; border:none; cursor:pointer; transition:background .3s; }
+    .rsvp-btn:hover { background:var(--cream-light); }
+
+    /* Flower SVG */
+    .flower { display:block; margin:0 auto; }
+
+    /* MODAL */
+    .modal-overlay { position:fixed; inset:0; background:rgba(5,5,5,.93); backdrop-filter:blur(6px); z-index:100; display:flex; align-items:center; justify-content:center; padding:1rem; opacity:0; pointer-events:none; transition:opacity .4s; }
+    .modal-overlay.open { opacity:1; pointer-events:all; }
+    .modal { background:#0e0e0e; border:1px solid rgba(232,213,183,.18); padding:2.2rem 1.5rem; max-width:420px; width:100%; text-align:center; position:relative; transform:translateY(20px); transition:transform .4s; max-height:90svh; overflow-y:auto; border-radius:2px; }
+    .modal-overlay.open .modal { transform:translateY(0); }
+    .modal-close { position:absolute; top:1rem; right:1.2rem; background:none; border:none; color:var(--muted); font-size:1.4rem; cursor:pointer; min-width:44px; min-height:44px; display:flex; align-items:center; justify-content:center; }
+    .modal-title { font-family:'Great Vibes',cursive; font-size:2.4rem; color:var(--cream-light); margin-bottom:.4rem; }
+    .modal-sub { font-size:.78rem; font-style:italic; color:var(--muted); margin-bottom:1.6rem; letter-spacing:.05em; }
+    .modal input,.modal select { width:100%; background:rgba(232,213,183,.04); border:none; border-bottom:1px solid rgba(232,213,183,.28); padding:.9rem .2rem; color:var(--cream); font-family:'Cormorant Garamond',serif; font-size:1rem; font-style:italic; outline:none; margin-bottom:1.2rem; transition:border-color .3s; -webkit-appearance:none; }
+    .modal input:focus,.modal select:focus { border-color:var(--cream); }
+    .modal input::placeholder { color:rgba(232,213,183,.32); }
+    .modal select option { background:#111; }
+    .modal-btns { display:flex; gap:.75rem; margin-top:.3rem; }
+    .mbtn { flex:1; padding:.9rem; font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.25em; text-transform:uppercase; cursor:pointer; border:1px solid var(--cream); transition:all .3s; min-height:44px; }
+    .mbtn-yes { background:var(--cream); color:var(--black); }
+    .mbtn-yes:hover { background:var(--cream-light); }
+    .mbtn-no { background:transparent; color:var(--cream); }
+    .mbtn-no:hover { background:rgba(232,213,183,.08); }
+    .thankyou { display:none; }
+    .thankyou.show { display:block; }
+    .form-wrap.hide { display:none; }
+
+    /* MOBILE */
+    @media (max-width:480px) {
+      .content { padding:0 1.2rem 4rem; }
+      .countdown { gap:.9rem; }
+      .modal { padding:2rem 1.2rem; }
+      .modal-btns { flex-direction:column; }
+    }
+    .ty-script { font-family:'Great Vibes',cursive; font-size:3rem; color:var(--cream-light); display:block; margin-bottom:1rem; }
+    .ty-body { font-size:1rem; font-style:italic; color:rgba(232,213,183,.75); line-height:1.8; }
+
+    /* Footer supprimé */
+
+
+    /* CARROUSEL */
+    .carrousel { position:absolute; inset:0; overflow:hidden; }
+    .carr-slide { position:absolute; inset:0; opacity:0; transition:opacity 1s ease; }
+    .carr-slide.carr-active { opacity:1; }
+    .carr-slide img { width:100%; height:100%; object-fit:cover; object-position:center top; filter:brightness(.58); }
+    .carr-btn { position:absolute; top:50%; transform:translateY(-50%); z-index:3; background:rgba(232,213,183,.15); border:1px solid rgba(232,213,183,.3); color:var(--cream); font-size:1.2rem; width:44px; height:44px; cursor:pointer; backdrop-filter:blur(4px); transition:background .3s; }
+    .carr-btn:hover { background:rgba(232,213,183,.3); }
+    .carr-prev { left:1rem; }
+    .carr-next { right:1rem; }
+    .carr-dots { position:absolute; bottom:1.2rem; left:50%; transform:translateX(-50%); display:flex; gap:.6rem; z-index:3; }
+    .carr-dot { width:7px; height:7px; border-radius:50%; background:rgba(232,213,183,.35); cursor:pointer; transition:background .3s; }
+    .carr-dot.carr-dot-active { background:var(--cream); }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+    nav a { color:rgba(232,213,183,0.45) !important; text-decoration:none !important; }
+  nav a:visited { color:rgba(232,213,183,0.45) !important; }
+  nav a:hover { color:var(--cream) !important; }
+  a.rsvp-btn, a.rsvp-btn:visited { color:var(--black) !important; text-decoration:none !important; }
+  a.rsvp-btn[style*="color:var(--cream)"], a.rsvp-btn[style*="color:var(--cream)"]:visited { color:var(--cream) !important; }
+  a.rsvp-btn[style*="color:rgba(232"], a.rsvp-btn[style*="color:rgba(232"]:visited { color:rgba(232,213,183,0.5) !important; }
+  </style>
+</head>
+<body>
+
+<!-- HERO CARROUSEL -->
+<section class="hero">
+  <div class="carrousel" id="carrousel">
+    <div class="carr-slide carr-active"><img src="photo1.jpg" alt="Syliane & Kevin"></div>
+    <div class="carr-slide"><img src="photo2.jpg" alt="Syliane & Kevin"></div>
+    <div class="carr-slide"><img src="photo3.jpg" alt="Syliane & Kevin"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <!-- Flèches -->
+  <button class="carr-btn carr-prev" onclick="carrMove(-1)">&#8592;</button>
+  <button class="carr-btn carr-next" onclick="carrMove(1)">&#8594;</button>
+  <!-- Points -->
+  <div class="carr-dots">
+    <span class="carr-dot carr-dot-active" onclick="carrGo(0)"></span>
+    <span class="carr-dot" onclick="carrGo(1)"></span>
+    <span class="carr-dot" onclick="carrGo(2)"></span>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <div class="names-section">
+    <span class="script name-script">Syliane</span>
+    <span class="script name-script">Bicko</span>
+    <span class="and-text">et</span>
+    <span class="script name-script">Kevin</span>
+    <span class="script name-script">Carpaye</span>
+  </div>
+
+  <div class="date-section">
+    <span class="script date-script">27 Juin,</span>
+    <span class="script date-script">2026</span>
+  </div>
+
+  <div class="countdown">
+    <span><b id="cd-d">--</b> j</span>
+    <span><b id="cd-h">--</b> h</span>
+    <span><b id="cd-m">--</b> min</span>
+    <span><b id="cd-s">--</b> s</span>
+  </div>
+
+  <div class="rsvp-section">
+    <button class="rsvp-btn" onclick="openModal()">RSVP</button>
+  </div>
+
+  <div style="margin-top:1rem; opacity:0; animation:fadeUp 1s 1s forwards;">
+    <div id="cal-menu" style="position:relative; display:inline-block;">
+      <button class="rsvp-btn" onclick="toggleCalMenu()" style="background:transparent; border:1px solid rgba(232,213,183,0.35); color:var(--cream); width:min(280px,80%);">
+        🗓 Ajouter au calendrier
+      </button>
+      <div id="cal-dropdown" style="display:none; position:absolute; left:50%; transform:translateX(-50%); top:calc(100% + .5rem); background:#1a1a1a; border:1px solid rgba(232,213,183,0.15); border-radius:3px; min-width:220px; z-index:100; overflow:hidden;">
+        <a onclick="addToCalendar('google')" style="display:block; padding:.85rem 1.2rem; font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.15em; color:var(--cream); text-decoration:none; cursor:pointer; border-bottom:1px solid rgba(232,213,183,0.08); transition:background .2s;" onmouseover="this.style.background='rgba(232,213,183,0.07)'" onmouseout="this.style.background='transparent'">Google Calendar</a>
+        <a onclick="addToCalendar('apple')" style="display:block; padding:.85rem 1.2rem; font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.15em; color:var(--cream); text-decoration:none; cursor:pointer; border-bottom:1px solid rgba(232,213,183,0.08); transition:background .2s;" onmouseover="this.style.background='rgba(232,213,183,0.07)'" onmouseout="this.style.background='transparent'">Apple Calendar / iCal</a>
+        <a onclick="addToCalendar('outlook')" style="display:block; padding:.85rem 1.2rem; font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.15em; color:var(--cream); text-decoration:none; cursor:pointer; transition:background .2s;" onmouseover="this.style.background='rgba(232,213,183,0.07)'" onmouseout="this.style.background='transparent'">Outlook</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="families-section">
+    <!-- Flower 1 -->
+    <svg class="flower" width="76" height="76" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:1.2rem; opacity:.7">
+      <g stroke="#e8d5b7" stroke-width="0.75">
+        <ellipse cx="40" cy="24" rx="5" ry="14"/><ellipse cx="40" cy="56" rx="5" ry="14"/>
+        <ellipse cx="24" cy="40" rx="14" ry="5"/><ellipse cx="56" cy="40" rx="14" ry="5"/>
+        <ellipse cx="27.5" cy="27.5" rx="5" ry="14" transform="rotate(-45 27.5 27.5)"/>
+        <ellipse cx="52.5" cy="52.5" rx="5" ry="14" transform="rotate(-45 52.5 52.5)"/>
+        <ellipse cx="52.5" cy="27.5" rx="5" ry="14" transform="rotate(45 52.5 27.5)"/>
+        <ellipse cx="27.5" cy="52.5" rx="5" ry="14" transform="rotate(45 27.5 52.5)"/>
+        <circle cx="40" cy="40" r="7"/><circle cx="40" cy="40" r="2.5" fill="#e8d5b7" stroke="none" opacity=".6"/>
+      </g>
+    </svg>
+
+    <span class="script families-script">Les familles Bicko<br>et Carpaye</span>
+    <p class="families-body">Ont le plaisir de vous faire part et<br>de vous convier au mariage de leurs<br>enfants</p>
+    <p class="verse">Ce que dieu a uni, que l'homme ne<br>le sépare pas<cite>Marc 10:09</cite></p>
+
+    <!-- Flower 2 -->
+    <svg class="flower" width="76" height="76" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-top:2.8rem; opacity:.45">
+      <g stroke="#e8d5b7" stroke-width="0.75">
+        <ellipse cx="40" cy="24" rx="5" ry="14"/><ellipse cx="40" cy="56" rx="5" ry="14"/>
+        <ellipse cx="24" cy="40" rx="14" ry="5"/><ellipse cx="56" cy="40" rx="14" ry="5"/>
+        <ellipse cx="27.5" cy="27.5" rx="5" ry="14" transform="rotate(-45 27.5 27.5)"/>
+        <ellipse cx="52.5" cy="52.5" rx="5" ry="14" transform="rotate(-45 52.5 52.5)"/>
+        <ellipse cx="52.5" cy="27.5" rx="5" ry="14" transform="rotate(45 52.5 27.5)"/>
+        <ellipse cx="27.5" cy="52.5" rx="5" ry="14" transform="rotate(45 27.5 52.5)"/>
+        <circle cx="40" cy="40" r="7"/><circle cx="40" cy="40" r="2.5" fill="#e8d5b7" stroke="none" opacity=".6"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="histoire-section" style="display:flex; flex-direction:column; gap:1rem; align-items:center;">
+    <a href="histoire.html" class="rsvp-btn" style="text-decoration:none; display:inline-block;">Notre Histoire</a>
+    <a href="programme.html" class="rsvp-btn" style="text-decoration:none; display:inline-block; background:transparent; border:1px solid rgba(232,213,183,0.4); color:var(--cream);">Programme</a>
+    <a href="important.html" class="rsvp-btn" style="text-decoration:none; display:inline-block; background:transparent; border:1px solid rgba(232,213,183,0.4); color:var(--cream);">Informations importantes</a>
+    <a href="faq.html" class="rsvp-btn" style="text-decoration:none; display:inline-block; background:transparent; border:1px solid rgba(232,213,183,0.4); color:var(--cream);">FAQ</a>
+  </div>
+
+
+</main>
+
+  <!-- NAV BAS -->
+  <nav style="width:100%; padding:2rem 1.5rem 3rem; text-align:center; border-top:1px solid rgba(232,213,183,0.1); margin-top:2rem;">
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:.8rem 1.5rem;">
+      <a href="/histoire.html" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">Notre Histoire</a>
+      <a href="/programme.html" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">Programme</a>
+      <a href="/important.html" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">Infos importantes</a>
+      <a href="/faq.html" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">FAQ</a>
+    </div>
+  </nav>
+
+<!-- MODAL RSVP -->
+<div class="modal-overlay" id="modal" onclick="overlayClose(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+
+    <!-- ÉTAPE 1 : recherche par prénom -->
+    <div id="step-search">
+      <p class="modal-title">Présence</p>
+      <p class="modal-sub">Syliane & Kevin — 27 Juin 2026</p>
+      <input type="text" id="rsvp-name" placeholder="Votre prénom" oninput="clearError()" onkeydown="if(event.key==='Enter')rechercherGroupe()"/>
+      <p id="rsvp-error" style="display:none; font-size:.8rem; font-style:italic; color:rgba(220,100,100,.85); margin-top:-.5rem; margin-bottom:.8rem;"></p>
+      <div class="modal-btns" style="margin-top:.5rem">
+        <button class="mbtn mbtn-yes" onclick="rechercherGroupe()">Rechercher →</button>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 1b : choix si prénom en double -->
+    <div id="step-choix" style="display:none">
+      <p class="modal-title" style="font-size:2rem">Qui êtes-vous ?</p>
+      <p class="modal-sub" style="margin-bottom:1.2rem">Plusieurs invités correspondent, choisissez votre groupe</p>
+      <div id="choix-list" style="display:flex; flex-direction:column; gap:.5rem;"></div>
+    </div>
+
+    <!-- ÉTAPE 2 : confirmation par membre -->
+    <div id="step-groupe" style="display:none">
+      <p class="modal-title" style="font-size:2rem" id="groupe-titre">Votre groupe</p>
+      <p class="modal-sub" id="groupe-sub">Confirmez la présence de chaque membre</p>
+      <div id="membres-list" style="margin: 1.2rem 0; display:flex; flex-direction:column; gap:.75rem;"></div>
+      <button class="mbtn mbtn-yes" style="width:100%; margin-top:.5rem" onclick="confirmerGroupe()">Confirmer ✓</button>
+    </div>
+
+    <!-- ÉTAPE 3 : merci -->
+    <div id="step-merci" style="display:none; text-align:center">
+      <span class="ty-script" id="ty-title">Merci !</span>
+      <p class="ty-body" id="ty-body"></p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .membre-row { display:flex; align-items:center; justify-content:space-between; padding:.6rem .2rem; border-bottom:1px solid rgba(232,213,183,.12); }
+  .membre-nom { font-family:'Cormorant Garamond',serif; font-size:1rem; font-style:italic; color:var(--cream); text-align:left; }
+  .membre-toggle { display:flex; gap:.4rem; }
+  .tog { padding:.35rem .7rem; font-family:'Cinzel',serif; font-size:.55rem; letter-spacing:.15em; border:1px solid rgba(232,213,183,.35); background:transparent; color:var(--muted); cursor:pointer; transition:all .25s; }
+  .tog.oui.actif { background:var(--cream); color:var(--black); border-color:var(--cream); }
+  .tog.non.actif { background:rgba(220,100,100,.25); color:rgba(255,180,180,.9); border-color:rgba(220,100,100,.5); }
+  nav a { color:rgba(232,213,183,0.45) !important; text-decoration:none !important; }
+  nav a:visited { color:rgba(232,213,183,0.45) !important; }
+  nav a:hover { color:var(--cream) !important; }
+  </style>
+
+<script>
+  /* ============================================================
+     LISTE DES GROUPES — modifiez ici librement
+     Chaque groupe = { nom: "Nom du groupe", membres: ["Prénom Nom", ...] }
+     Un invité seul = un groupe avec un seul membre
+  ============================================================ */
+  const GROUPES = [
+    { nom: "Wisman", membres: ["Wisman"] },
+    { nom: "Doriane & Jonathan", membres: ["Doriane", "Jonathan", "Enfant"] },
+    { nom: "Denis", membres: ["Denis"] },
+    { nom: "Guilaine & Etienne", membres: ["Guilaine", "Etienne", "Jamelia", "Neoma"] },
+    { nom: "Christelle & Kenny", membres: ["Christelle", "Christelle +1", "Kenny", "Kiana"] },
+    { nom: "Christine & Maeva", membres: ["Christine", "Christine +1", "Maeva"] },
+    { nom: "Thierry & Anais", membres: ["Thierry", "Anais"] },
+    { nom: "Carole & famille", membres: ["Carole", "Maeva", "Matisse"] },
+    { nom: "Sebastien & Evelynne", membres: ["Sebastien", "Evelynne"] },
+    { nom: "Jerome", membres: ["Jerome", "Jerome +1"] },
+    { nom: "Stephane L", membres: ["Stephane L", "Stephane L +1"] },
+    { nom: "Dalerie", membres: ["Dalerie"] },
+    { nom: "Afaf", membres: ["Afaf"] },
+    { nom: "Alicia", membres: ["Alicia"] },
+    { nom: "Nolwen & Aziz", membres: ["Nolwen", "Aziz"] },
+    { nom: "Jimmy", membres: ["Jimmy", "Jimmy +1", "Jimmy +2"] },
+    { nom: "Lyncia & famille", membres: ["Lyncia", "Dylane", "Georgine", "Claude"] },
+    { nom: "Daisia & Loic", membres: ["Daisia", "Loic", "Enfant 1", "Enfant 2", "Enfant 3"] },
+    { nom: "Cyndra & Yovana", membres: ["Cyndra", "Yovana"] },
+    { nom: "Magou", membres: ["Magou", "Magou +1"] },
+    { nom: "Marlene", membres: ["Marlene"] },
+    { nom: "Melissa", membres: ["Melissa"] },
+    { nom: "Marie", membres: ["Marie"] },
+    { nom: "Sarah", membres: ["Sarah"] },
+    { nom: "Sidney & Terry", membres: ["Sidney", "Terry"] },
+    { nom: "Ashley & Gabriel", membres: ["Ashley", "Gabriel", "Bébé"] },
+    { nom: "Aurelie & Dylan", membres: ["Aurelie", "Dylan"] },
+    { nom: "Gwladys & famille", membres: ["Gwladys", "Mimose", "Regis"] },
+    { nom: "Lindsay & Joeffrey", membres: ["Lindsay", "Joeffrey", "Enfant", "Bébé"] },
+    { nom: "Lenny & famille", membres: ["Lenny", "Pamela", "Christophe", "Jahzara"] },
+    { nom: "Regine", membres: ["Regine"] },
+    { nom: "Ginesse & Jessica", membres: ["Ginesse", "Ginesse +1", "Enfant 1", "Enfant 2", "Enfant 3", "Jessica", "Yves"] },
+    { nom: "Johanna", membres: ["Johanna", "Enfant"] },
+    { nom: "Naomie", membres: ["Naomie", "Naomie +1"] },
+    { nom: "Pauline & famille", membres: ["Pauline", "Pauline +1", "Prospere", "Marie-Hélène"] },
+    { nom: "Prisca", membres: ["Prisca", "Prisca +1"] },
+    { nom: "Didier & Olivia", membres: ["Didier", "Olivia", "Enfant 1", "Enfant 2"] },
+    { nom: "Leslie & Wilson", membres: ["Leslie", "Wilson", "Enfant"] },
+    { nom: "Maimaine", membres: ["Maimaine", "Maimaine +1"] },
+    { nom: "Arnaud & famille", membres: ["Arnaud", "Cynthia", "Gaelle", "Roy", "Djayna", "Enfant", "Janette", "Janette +1"] },
+    { nom: "Patrice & Stacy", membres: ["Patrice", "Stacy", "Enfant 1", "Enfant 2"] },
+    { nom: "Fabienne", membres: ["Fabienne"] },
+    { nom: "Sophie & Stephane", membres: ["Sophie", "Stephane", "Enfant 1", "Enfant 2", "Enfant 3"] },
+    { nom: "Yannick", membres: ["Yannick", "Yannick +1"] },
+    { nom: "Maera & Didier", membres: ["Maera", "Didier", "Bébé", "Enfant"] },
+    { nom: "Ayawa", membres: ["Ayawa"] },
+    { nom: "Charmi", membres: ["Charmi", "Charmi +1"] },
+    { nom: "Christelle ide", membres: ["Christelle ide"] },
+    { nom: "Christelle as", membres: ["Christelle as"] },
+    { nom: "Jessica", membres: ["Jessica"] },
+    { nom: "Ortega", membres: ["Ortega"] },
+    { nom: "Lydie", membres: ["Lydie"] },
+    { nom: "Nathalie", membres: ["Nathalie"] },
+    { nom: "Yakoba", membres: ["Yakoba"] },
+    { nom: "Christopher & Melanie", membres: ["Christopher", "Melanie", "Enfant 1", "Enfant 2", "Enfant 3"] },
+    { nom: "Christopher MB", membres: ["Christopher MB"] },
+    { nom: "Louison", membres: ["Louison"] },
+    { nom: "Selma", membres: ["Selma"] },
+    { nom: "Anais", membres: ["Anais"] },
+    { nom: "Lenaic", membres: ["Lenaic"] },
+    { nom: "Cassandra", membres: ["Cassandra"] },
+    { nom: "Eldrick", membres: ["Eldrick"] },
+    { nom: "Deborah & Gael", membres: ["Deborah", "Gael"] },
+    { nom: "Roger", membres: ["Roger", "Roger +1"] },
+    { nom: "Ngoua", membres: ["Ngoua", "Ngoua +1"] },
+    { nom: "Felly", membres: ["Felly"] },
+    { nom: "Clarisse", membres: ["Clarisse", "Clarisse +1"] },
+    { nom: "Papitcho", membres: ["Papitcho", "Papitcho +1"] },
+    { nom: "Ferdin", membres: ["Ferdin", "Ferdin +1"] },
+    { nom: "Flavien", membres: ["Flavien", "Flavien +1"] },
+    { nom: "Didier Bilongo", membres: ["Didier Bilongo", "Didier Bilongo +1"] },
+    { nom: "Claude Bilongo", membres: ["Claude Bilongo", "Claude Bilongo +1"] },
+    { nom: "Anaclet", membres: ["Anaclet", "Anaclet +1"] },
+    { nom: "Max Tounde", membres: ["Max Tounde", "Max Tounde +1"] },
+    { nom: "Armel & Tatiana", membres: ["Armel", "Tatiana"] },
+    { nom: "Simon", membres: ["Simon", "Simon +1"] },
+    { nom: "Martin", membres: ["Martin", "Martin +1"] },
+    { nom: "Tania", membres: ["Tania", "Tania +1"] },
+    { nom: "Saint Claire", membres: ["Saint Claire", "Saint Claire +1"] },
+    { nom: "Rachelle", membres: ["Rachelle"] },
+    { nom: "Sylvia", membres: ["Sylvia"] },
+    { nom: "Gemma", membres: ["Gemma", "Gemma +1"] },
+    { nom: "Gaby", membres: ["Gaby", "Gaby +1"] },
+    { nom: "Kulutu", membres: ["Kulutu"] },
+    { nom: "Omer Belsis", membres: ["Omer Belsis", "Omer Belsis +1"] },
+    { nom: "Oyo Consul", membres: ["Oyo Consul"] },
+    { nom: "Jean Claude", membres: ["Jean Claude", "Jean Claude +1"] },
+    { nom: "Carla & Benny", membres: ["Carla", "Benny"] },
+    { nom: "Syliane & Kevin", membres: ["Syliane", "Kevin", "Enfant 1", "Enfant 2"] },
+  ];
+
+  /* Countdown */
+  const W = new Date('2026-06-27T15:00:00');
+  function tick(){
+    const d=W-new Date();
+    if(d<=0)return;
+    document.getElementById('cd-d').textContent=Math.floor(d/86400000);
+    document.getElementById('cd-h').textContent=Math.floor((d%86400000)/3600000);
+    document.getElementById('cd-m').textContent=Math.floor((d%3600000)/60000);
+    document.getElementById('cd-s').textContent=Math.floor((d%60000)/1000);
+  }
+  tick(); setInterval(tick,1000);
+
+  /* Modal */
+  function openModal(){ document.getElementById('modal').classList.add('open'); }
+  function closeModal(){
+    document.getElementById('modal').classList.remove('open');
+    setTimeout(()=>{
+      document.getElementById('step-search').style.display='block';
+      document.getElementById('step-choix').style.display='none';
+      document.getElementById('step-groupe').style.display='none';
+      document.getElementById('step-merci').style.display='none';
+      document.getElementById('rsvp-name').value='';
+      document.getElementById('rsvp-error').style.display='none';
+    },400);
+  }
+  function overlayClose(e){ if(e.target===document.getElementById('modal')) closeModal(); }
+  function clearError(){ document.getElementById('rsvp-error').style.display='none'; }
+
+  function rechercherGroupe(){
+    const raw = document.getElementById('rsvp-name').value.trim().toLowerCase();
+    if(!raw){ showError('Veuillez entrer votre prénom.'); return; }
+
+    const groupesTrouves = GROUPES.filter(g =>
+      g.membres.some(m => m.toLowerCase().startsWith(raw) || m.toLowerCase().split(' ').some(part => part === raw))
+    );
+
+    if(groupesTrouves.length === 0){ showError('Prénom non trouvé sur la liste des invités.'); return; }
+
+    // Si plusieurs groupes trouvés, afficher un choix
+    if(groupesTrouves.length > 1){
+      document.getElementById('step-search').style.display='none';
+      document.getElementById('step-choix').style.display='block';
+      const choixList = document.getElementById('choix-list');
+      choixList.innerHTML = '';
+      groupesTrouves.forEach(g => {
+        const btn = document.createElement('button');
+        btn.className = 'mbtn mbtn-no';
+        btn.style.cssText = 'width:100%; margin-bottom:.5rem; text-align:left; padding:.8rem 1rem; font-size:.75rem;';
+        btn.textContent = g.membres.join(', ');
+        btn.onclick = () => afficherGroupe(g);
+        choixList.appendChild(btn);
+      });
+      return;
+    }
+
+    afficherGroupe(groupesTrouves[0]);
+  }
+
+  function afficherGroupe(groupe){
+    document.getElementById('step-search').style.display='none';
+    document.getElementById('step-choix').style.display='none';
+    document.getElementById('step-groupe').style.display='block';
+    document.getElementById('groupe-titre').textContent = groupe.nom;
+    document.getElementById('groupe-sub').textContent = groupe.membres.length > 1
+      ? 'Confirmez la présence de chaque membre'
+      : 'Confirmez votre présence';
+
+    const list = document.getElementById('membres-list');
+    list.innerHTML = '';
+    groupe.membres.forEach((m, i) => {
+      const row = document.createElement('div');
+      row.className = 'membre-row';
+      row.innerHTML = `
+        <span class="membre-nom">${m}</span>
+        <div class="membre-toggle">
+          <button class="tog oui" id="oui-${i}" onclick="toggleMembre(${i},'oui')">✓ Oui</button>
+          <button class="tog non" id="non-${i}" onclick="toggleMembre(${i},'non')">✗ Non</button>
+        </div>`;
+      list.appendChild(row);
+    });
+    list.dataset.groupe = JSON.stringify(groupe);
+  }
+
+  function toggleMembre(i, choix){
+    document.getElementById(`oui-${i}`).classList.toggle('actif', choix==='oui');
+    document.getElementById(`non-${i}`).classList.toggle('actif', choix==='non');
+  }
+
+  function confirmerGroupe(){
+    const groupe = JSON.parse(document.getElementById('membres-list').dataset.groupe);
+    const presents = [], absents = [];
+    groupe.membres.forEach((m,i)=>{
+      if(document.getElementById(`oui-${i}`).classList.contains('actif')) presents.push(m);
+      else if(document.getElementById(`non-${i}`).classList.contains('actif')) absents.push(m);
+      else absents.push(m); // non répondu = absent par défaut
+    });
+
+    document.getElementById('step-groupe').style.display='none';
+    document.getElementById('step-merci').style.display='block';
+    document.getElementById('ty-title').textContent = presents.length > 0 ? 'Merci !' : '♡';
+
+    let msg = '';
+    if(presents.length)
+      msg += `<strong style="color:var(--cream-light)">${presents.join(', ')}</strong><br>sera présent(e) — nous avons hâte de vous voir ! ♡`;
+    if(absents.length && presents.length)
+      msg += `<br><br>`;
+    if(absents.length)
+      msg += `<span style="color:var(--muted)">${absents.join(', ')}<br>nous manquera ce jour-là.</span>`;
+    document.getElementById('ty-body').innerHTML = msg;
+
+    // Envoi vers Google Sheets via iframe cachée
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbytj36d6NgIyWshRx18obD8nUGTa-zaZHOdQDlSEZCwZgScVUq661e2YkE61C3b74yomQ/exec';
+    const params = new URLSearchParams({
+      groupe: groupe.nom,
+      presents: presents.join(', ') || '—',
+      absents: absents.join(', ') || '—',
+      nb_presents: presents.length,
+      nb_absents: absents.length
+    });
+    let iframe = document.getElementById('rsvp-iframe');
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.id = 'rsvp-iframe';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+    }
+    iframe.src = SCRIPT_URL + '?' + params.toString();
+  }
+
+  function showError(msg){
+    const e = document.getElementById('rsvp-error');
+    e.textContent = msg; e.style.display='block';
+  }
+
+
+  /* Carrousel */
+  let carrIdx = 0;
+  const slides = document.querySelectorAll('.carr-slide');
+  const dots   = document.querySelectorAll('.carr-dot');
+  function carrGo(n){
+    slides[carrIdx].classList.remove('carr-active');
+    dots[carrIdx].classList.remove('carr-dot-active');
+    carrIdx = (n + slides.length) % slides.length;
+    slides[carrIdx].classList.add('carr-active');
+    dots[carrIdx].classList.add('carr-dot-active');
+  }
+  function carrMove(dir){ carrGo(carrIdx + dir); }
+  setInterval(()=>carrMove(1), 4000);
+
+  function submit(){}
+
+  // Calendrier
+  function toggleCalMenu() {
+    const d = document.getElementById('cal-dropdown');
+    d.style.display = d.style.display === 'none' ? 'block' : 'none';
+  }
+  document.addEventListener('click', function(e) {
+    if (!document.getElementById('cal-menu').contains(e.target)) {
+      document.getElementById('cal-dropdown').style.display = 'none';
+    }
+  });
+
+  function addToCalendar(type) {
+    document.getElementById('cal-dropdown').style.display = 'none';
+    const title = encodeURIComponent('Mariage Syliane & Kevin');
+    const details = encodeURIComponent('Cérémonie religieuse à 13h30 — Cathédrale de la Résurrection, Évry\nRéception à 17h00 — LOKUS, 2000 Rue Denis Papin, Réau 77550');
+    const location = encodeURIComponent('Cathédrale de la Résurrection, Cours Monseigneur Roméro, Évry-Courcouronnes');
+    const start = '20260627T130000';
+    const end   = '20260628T040000';
+
+    if (type === 'google') {
+      const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&location=${location}`;
+      window.open(url, '_blank');
+    } else if (type === 'apple' || type === 'outlook') {
+      const ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Syliane & Kevin//FR',
+        'BEGIN:VEVENT',
+        `DTSTART:${start}`,
+        `DTEND:${end}`,
+        `SUMMARY:Mariage Syliane & Kevin`,
+        `DESCRIPTION:Cérémonie religieuse à 13h30 — Cathédrale de la Résurrection\\nRéception à 17h00 — LOKUS\\, 2000 Rue Denis Papin\\, Réau 77550`,
+        `LOCATION:Cathédrale de la Résurrection\\, Cours Monseigneur Roméro\\, Évry-Courcouronnes`,
+        'STATUS:CONFIRMED',
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+      const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'mariage-syliane-kevin.ics';
+      link.click();
+    }
+  }
+</script>
+</body>
+</html>
