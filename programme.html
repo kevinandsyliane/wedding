@@ -85,17 +85,7 @@
     <p class="page-date">Samedi 27 Juin 2026</p>
 
     <!-- Flower haut -->
-    <svg class="flower" width="56" height="56" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:2.5rem; opacity:.5">
-      <g stroke="#e8d5b7" stroke-width="0.75">
-        <ellipse cx="40" cy="24" rx="5" ry="14"/><ellipse cx="40" cy="56" rx="5" ry="14"/>
-        <ellipse cx="24" cy="40" rx="14" ry="5"/><ellipse cx="56" cy="40" rx="14" ry="5"/>
-        <ellipse cx="27.5" cy="27.5" rx="5" ry="14" transform="rotate(-45 27.5 27.5)"/>
-        <ellipse cx="52.5" cy="52.5" rx="5" ry="14" transform="rotate(-45 52.5 52.5)"/>
-        <ellipse cx="52.5" cy="27.5" rx="5" ry="14" transform="rotate(45 52.5 27.5)"/>
-        <ellipse cx="27.5" cy="52.5" rx="5" ry="14" transform="rotate(45 27.5 52.5)"/>
-        <circle cx="40" cy="40" r="7"/><circle cx="40" cy="40" r="2.5" fill="#e8d5b7" stroke="none" opacity=".6"/>
-      </g>
-    </svg>
+    <img class="flower" src="logo.jpeg" style="width:90px; height:90px; object-fit:contain; border-radius:50%; margin-bottom:2.5rem; opacity:.5" alt="S&K">
 
     <div class="timeline">
 
@@ -132,17 +122,7 @@
     </div>
 
     <!-- Flower bas -->
-    <svg class="flower" width="56" height="56" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-top:1rem; opacity:.35">
-      <g stroke="#e8d5b7" stroke-width="0.75">
-        <ellipse cx="40" cy="24" rx="5" ry="14"/><ellipse cx="40" cy="56" rx="5" ry="14"/>
-        <ellipse cx="24" cy="40" rx="14" ry="5"/><ellipse cx="56" cy="40" rx="14" ry="5"/>
-        <ellipse cx="27.5" cy="27.5" rx="5" ry="14" transform="rotate(-45 27.5 27.5)"/>
-        <ellipse cx="52.5" cy="52.5" rx="5" ry="14" transform="rotate(-45 52.5 52.5)"/>
-        <ellipse cx="52.5" cy="27.5" rx="5" ry="14" transform="rotate(45 52.5 27.5)"/>
-        <ellipse cx="27.5" cy="52.5" rx="5" ry="14" transform="rotate(45 27.5 52.5)"/>
-        <circle cx="40" cy="40" r="7"/><circle cx="40" cy="40" r="2.5" fill="#e8d5b7" stroke="none" opacity=".6"/>
-      </g>
-    </svg>
+    <img class="flower" src="logo.jpeg" style="width:90px; height:90px; object-fit:contain; border-radius:50%; margin-top:1rem; opacity:.35" alt="S&K">
 
     <a class="back-link" href="important.html">Informations importantes →</a>
 
@@ -158,5 +138,49 @@
       <a href="faq.html" style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(232,213,183,0.45) !important; text-decoration:none !important;">FAQ</a>
     </div>
   </nav>
+
+  <!-- Musique de fond continue -->
+  <audio id="bg-music" loop>
+    <source src="musique.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="music-btn" onclick="toggleMusic()" style="
+    position:fixed; bottom:1.5rem; right:1.5rem;
+    width:2.8rem; height:2.8rem; border-radius:50%;
+    background:rgba(10,10,10,0.7); border:1px solid rgba(232,213,183,0.4);
+    color:#e8d5b7; font-size:1.2rem; cursor:pointer; z-index:9999;
+    display:flex; align-items:center; justify-content:center;
+    backdrop-filter:blur(6px); transition:all .3s;
+  ">🎵</button>
+
+  <script>
+    (function(){
+      const music = document.getElementById('bg-music');
+      music.volume = 0.15;
+      const btn = document.getElementById('music-btn');
+      const savedTime    = parseFloat(localStorage.getItem('musicTime') || '0');
+      const savedPlaying = localStorage.getItem('musicPlaying') !== 'false';
+      music.currentTime = isNaN(savedTime) ? 0 : savedTime;
+      setInterval(() => {
+        if (!music.paused) localStorage.setItem('musicTime', music.currentTime);
+      }, 500);
+      function setBtn(isPlaying) {
+        btn.textContent = isPlaying ? '🎵' : '🔇';
+        localStorage.setItem('musicPlaying', isPlaying);
+      }
+      function tryPlay() {
+        music.play().then(() => setBtn(true)).catch(() => {});
+      }
+      if (savedPlaying) {
+        window.addEventListener('load', tryPlay);
+      } else {
+        setBtn(false);
+      }
+      window.toggleMusic = function() {
+        if (music.paused) { tryPlay(); }
+        else { music.pause(); setBtn(false); }
+      };
+    })();
+  </script>
 </body>
 </html>

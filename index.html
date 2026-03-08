@@ -106,6 +106,36 @@
 </head>
 <body>
 
+<!-- SPLASH SCREEN -->
+<div id="splash" style="
+  position:fixed; inset:0; z-index:99999;
+  background:#0a0a0a;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  transition:opacity .8s ease;
+">
+  <svg width="64" height="64" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:.6; margin-bottom:2rem;">
+    <g stroke="#e8d5b7" stroke-width="0.75">
+      <ellipse cx="40" cy="24" rx="5" ry="14"/><ellipse cx="40" cy="56" rx="5" ry="14"/>
+      <ellipse cx="24" cy="40" rx="14" ry="5"/><ellipse cx="56" cy="40" rx="14" ry="5"/>
+      <ellipse cx="27.5" cy="27.5" rx="5" ry="14" transform="rotate(-45 27.5 27.5)"/>
+      <ellipse cx="52.5" cy="52.5" rx="5" ry="14" transform="rotate(-45 52.5 52.5)"/>
+      <ellipse cx="52.5" cy="27.5" rx="5" ry="14" transform="rotate(45 52.5 27.5)"/>
+      <ellipse cx="27.5" cy="52.5" rx="5" ry="14" transform="rotate(45 27.5 52.5)"/>
+      <circle cx="40" cy="40" r="7"/><circle cx="40" cy="40" r="2.5" fill="#e8d5b7" stroke="none" opacity=".6"/>
+    </g>
+  </svg>
+  <span style="font-family:'Great Vibes',cursive; color:#f0e4cc; font-size:3.2rem; line-height:1.2; display:block; margin-bottom:.4rem;">Syliane</span>
+  <span style="font-family:'Great Vibes',cursive; color:#f0e4cc; font-size:3.2rem; line-height:1.2; display:block; margin-bottom:.3rem;">&amp; Kevin</span>
+  <span style="font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.3em; color:rgba(232,213,183,0.4); text-transform:uppercase; margin-bottom:3rem;">27 Juin 2026</span>
+  <button onclick="enterSite()" style="
+    font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.3em; text-transform:uppercase;
+    background:#e8d5b7; color:#0a0a0a; border:none; padding:.9rem 2.5rem;
+    cursor:pointer; transition:background .3s;
+  ">Entrer</button>
+</div>
+
+
 <!-- HERO CARROUSEL -->
 <section class="hero">
   <div class="carrousel" id="carrousel">
@@ -167,34 +197,14 @@
 
   <div class="families-section">
     <!-- Flower 1 -->
-    <svg class="flower" width="76" height="76" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:1.2rem; opacity:.7">
-      <g stroke="#e8d5b7" stroke-width="0.75">
-        <ellipse cx="40" cy="24" rx="5" ry="14"/><ellipse cx="40" cy="56" rx="5" ry="14"/>
-        <ellipse cx="24" cy="40" rx="14" ry="5"/><ellipse cx="56" cy="40" rx="14" ry="5"/>
-        <ellipse cx="27.5" cy="27.5" rx="5" ry="14" transform="rotate(-45 27.5 27.5)"/>
-        <ellipse cx="52.5" cy="52.5" rx="5" ry="14" transform="rotate(-45 52.5 52.5)"/>
-        <ellipse cx="52.5" cy="27.5" rx="5" ry="14" transform="rotate(45 52.5 27.5)"/>
-        <ellipse cx="27.5" cy="52.5" rx="5" ry="14" transform="rotate(45 27.5 52.5)"/>
-        <circle cx="40" cy="40" r="7"/><circle cx="40" cy="40" r="2.5" fill="#e8d5b7" stroke="none" opacity=".6"/>
-      </g>
-    </svg>
+    <img class="flower" src="logo.jpeg" style="width:90px; height:90px; object-fit:contain; border-radius:50%; margin-bottom:1.2rem; opacity:.7" alt="S&K">
 
     <span class="script families-script">Les familles Bicko<br>et Carpaye</span>
     <p class="families-body">Ont le plaisir de vous faire part et<br>de vous convier au mariage de leurs<br>enfants</p>
     <p class="verse">Ce que dieu a uni, que l'homme ne<br>le sépare pas<cite>Marc 10:09</cite></p>
 
     <!-- Flower 2 -->
-    <svg class="flower" width="76" height="76" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-top:2.8rem; opacity:.45">
-      <g stroke="#e8d5b7" stroke-width="0.75">
-        <ellipse cx="40" cy="24" rx="5" ry="14"/><ellipse cx="40" cy="56" rx="5" ry="14"/>
-        <ellipse cx="24" cy="40" rx="14" ry="5"/><ellipse cx="56" cy="40" rx="14" ry="5"/>
-        <ellipse cx="27.5" cy="27.5" rx="5" ry="14" transform="rotate(-45 27.5 27.5)"/>
-        <ellipse cx="52.5" cy="52.5" rx="5" ry="14" transform="rotate(-45 52.5 52.5)"/>
-        <ellipse cx="52.5" cy="27.5" rx="5" ry="14" transform="rotate(45 52.5 27.5)"/>
-        <ellipse cx="27.5" cy="52.5" rx="5" ry="14" transform="rotate(45 27.5 52.5)"/>
-        <circle cx="40" cy="40" r="7"/><circle cx="40" cy="40" r="2.5" fill="#e8d5b7" stroke="none" opacity=".6"/>
-      </g>
-    </svg>
+    <img class="flower" src="logo.jpeg" style="width:90px; height:90px; object-fit:contain; border-radius:50%; margin-top:2.8rem; opacity:.45" alt="S&K">
   </div>
 
   <div class="histoire-section" style="display:flex; flex-direction:column; gap:1rem; align-items:center;">
@@ -623,5 +633,70 @@
       }
     }
   </script>
+
+  <!-- Musique de fond continue -->
+  <audio id="bg-music" loop>
+    <source src="musique.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="music-btn" onclick="toggleMusic()" style="
+    position:fixed; bottom:1.5rem; right:1.5rem;
+    width:2.8rem; height:2.8rem; border-radius:50%;
+    background:rgba(10,10,10,0.7); border:1px solid rgba(232,213,183,0.4);
+    color:#e8d5b7; font-size:1.2rem; cursor:pointer; z-index:9999;
+    display:flex; align-items:center; justify-content:center;
+    backdrop-filter:blur(6px); transition:all .3s;
+  ">🎵</button>
+
+  <script>
+    (function(){
+      const music = document.getElementById('bg-music');
+      music.volume = 0.15;
+      const btn = document.getElementById('music-btn');
+      const savedTime    = parseFloat(localStorage.getItem('musicTime') || '0');
+      const savedPlaying = localStorage.getItem('musicPlaying') !== 'false';
+      music.currentTime = isNaN(savedTime) ? 0 : savedTime;
+      setInterval(() => {
+        if (!music.paused) localStorage.setItem('musicTime', music.currentTime);
+      }, 500);
+      function setBtn(isPlaying) {
+        btn.textContent = isPlaying ? '🎵' : '🔇';
+        localStorage.setItem('musicPlaying', isPlaying);
+      }
+      function tryPlay() {
+        music.play().then(() => setBtn(true)).catch(() => {});
+      }
+      if (savedPlaying) {
+        window.addEventListener('load', tryPlay);
+      } else {
+        setBtn(false);
+      }
+      window.toggleMusic = function() {
+        if (music.paused) { tryPlay(); }
+        else { music.pause(); setBtn(false); }
+      };
+    })();
+  </script>
+
+  <script>
+    function enterSite() {
+      const music = document.getElementById('bg-music');
+      if (music) {
+        music.play().then(() => {
+          localStorage.setItem('musicPlaying', 'true');
+          localStorage.setItem('musicTime', '0');
+          document.getElementById('music-btn').textContent = '🎵';
+        }).catch(() => {});
+      }
+      const splash = document.getElementById('splash');
+      splash.style.opacity = '0';
+      setTimeout(() => splash.style.display = 'none', 800);
+      sessionStorage.setItem('splashDone', '1');
+    }
+    if (sessionStorage.getItem('splashDone')) {
+      document.getElementById('splash').style.display = 'none';
+    }
+  </script>
+
 </body>
 </html>
