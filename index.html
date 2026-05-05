@@ -29,12 +29,7 @@
     .carr-slide { position:absolute; inset:0; opacity:0; transition:opacity 1s ease; }
     .carr-slide.carr-active { opacity:1; }
     .carr-slide img { width:100%; height:100%; object-fit:cover; object-position:center top; filter:brightness(.58); }
-    .carr-btn { position:absolute; top:50%; transform:translateY(-50%); z-index:3; background:rgba(232,213,183,.15); border:1px solid rgba(232,213,183,.3); color:var(--cream); font-size:1.2rem; width:44px; height:44px; cursor:pointer; backdrop-filter:blur(4px); transition:background .3s; }
-    .carr-btn:hover { background:rgba(232,213,183,.3); }
-    .carr-prev { left:1rem; } .carr-next { right:1rem; }
-    .carr-dots { position:absolute; bottom:1.2rem; left:50%; transform:translateX(-50%); display:flex; gap:.6rem; z-index:3; }
-    .carr-dot { width:7px; height:7px; border-radius:50%; background:rgba(232,213,183,.35); cursor:pointer; transition:background .3s; }
-    .carr-dot.carr-dot-active { background:var(--cream); }
+    .hero-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.58); }
 
     /* CONTENT */
     .content { background:var(--black); text-align:center; padding:0 1.5rem 5rem; width:100%; }
@@ -195,19 +190,10 @@
 ════════════════════════════════ -->
 <div id="page-accueil" class="page active">
   <section class="hero" style="width:100%">
-    <div class="carrousel" id="carrousel">
-      <div class="carr-slide carr-active"><img src="photo1.jpg" alt="Syliane & Kevin"></div>
-      <div class="carr-slide"><img src="photo2.jpg" alt="Syliane & Kevin"></div>
-      <div class="carr-slide"><img src="photo3.jpg" alt="Syliane & Kevin"></div>
-    </div>
+    <video class="hero-video" autoplay muted loop playsinline>
+      <source src="video.mp4" type="video/mp4">
+    </video>
     <div class="hero-overlay"></div>
-    <button class="carr-btn carr-prev" onclick="carrMove(-1)">&#8592;</button>
-    <button class="carr-btn carr-next" onclick="carrMove(1)">&#8594;</button>
-    <div class="carr-dots">
-      <span class="carr-dot carr-dot-active" onclick="carrGo(0)"></span>
-      <span class="carr-dot" onclick="carrGo(1)"></span>
-      <span class="carr-dot" onclick="carrGo(2)"></span>
-    </div>
   </section>
 
   <main class="content">
